@@ -6,7 +6,8 @@ import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:english_words_trainer/core/errors/failures.dart' as _i5;
-import 'package:supabase_flutter/supabase_flutter.dart' as _i6;
+import 'package:english_words_trainer/features/vocabulary_trainer/domain/entities/user_entity.dart'
+    as _i6;
 import 'package:english_words_trainer/features/vocabulary_trainer/domain/repositories/auth_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -49,9 +50,9 @@ class MockAuthRepositry extends _i1.Mock implements _i3.AuthRepositry {
               _FakeEither_0<_i5.Failure, _i2.Unit>())) as _i4
           .Future<_i2.Either<_i5.Failure, _i2.Unit>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.User>> getSignedInUser() =>
+  _i4.Future<_i2.Either<_i5.Failure, _i6.UserEntity>> getSignedInUser() =>
       (super.noSuchMethod(Invocation.method(#getSignedInUser, []),
-              returnValue: Future<_i2.Either<_i5.Failure, _i6.User>>.value(
-                  _FakeEither_0<_i5.Failure, _i6.User>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i6.User>>);
+          returnValue: Future<_i2.Either<_i5.Failure, _i6.UserEntity>>.value(
+              _FakeEither_0<_i5.Failure, _i6.UserEntity>())) as _i4
+          .Future<_i2.Either<_i5.Failure, _i6.UserEntity>>);
 }
