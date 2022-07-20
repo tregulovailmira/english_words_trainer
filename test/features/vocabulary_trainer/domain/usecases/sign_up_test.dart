@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/repositories/auth_repository.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/usecases/sign_up.dart';
+import 'package:english_words_trainer/features/auth/domain/repositories/auth_repository.dart';
+import 'package:english_words_trainer/features/auth/domain/usecases/sign_up.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

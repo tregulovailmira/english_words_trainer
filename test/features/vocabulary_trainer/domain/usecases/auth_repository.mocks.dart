@@ -6,9 +6,9 @@ import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:english_words_trainer/core/errors/failures.dart' as _i5;
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/entities/user_entity.dart'
+import 'package:english_words_trainer/features/auth/domain/entities/user_entity.dart'
     as _i6;
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/repositories/auth_repository.dart'
+import 'package:english_words_trainer/features/auth/domain/repositories/auth_repository.dart'
     as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 

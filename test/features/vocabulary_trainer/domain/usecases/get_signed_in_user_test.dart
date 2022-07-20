@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_words_trainer/core/usecases/usecase.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/entities/user_entity.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/repositories/auth_repository.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/usecases/get_signed_in_user.dart';
+import 'package:english_words_trainer/features/auth/domain/entities/user_entity.dart';
+import 'package:english_words_trainer/features/auth/domain/repositories/auth_repository.dart';
+import 'package:english_words_trainer/features/auth/domain/usecases/get_signed_in_user.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

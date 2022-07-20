@@ -4,9 +4,9 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:english_words_trainer/core/errors/exceptions.dart';
 import 'package:english_words_trainer/core/errors/failures.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/data/datasources/db_datasource.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/data/models/user_model.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/data/repositories/auth_repository_impl.dart';
+import 'package:english_words_trainer/features/auth/data/datasources/db_datasource.dart';
+import 'package:english_words_trainer/features/auth/data/models/user_model.dart';
+import 'package:english_words_trainer/features/auth/data/repositories/auth_repository_impl.dart';
 
 import './auth_repository_impl_test.mocks.dart';
 

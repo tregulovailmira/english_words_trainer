@@ -5,8 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:english_words_trainer/core/errors/exceptions.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/data/datasources/db_datasource.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/data/models/user_model.dart';
+import 'package:english_words_trainer/features/auth/data/datasources/db_datasource.dart';
+import 'package:english_words_trainer/features/auth/data/models/user_model.dart';
 
 
 import 'db_datasource_test.mocks.dart';

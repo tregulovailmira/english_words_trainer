@@ -1,17 +1,18 @@
 import 'package:dartz/dartz.dart';
-import 'package:english_words_trainer/core/errors/failures.dart';
-import 'package:english_words_trainer/core/usecases/usecase.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/repositories/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 
-class SignInWithEmailAndPassword extends Usecase<Unit, Params> {
+import '../../../../core/errors/failures.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../repositories/auth_repository.dart';
+
+class SignUp extends Usecase<Unit, Params> {
   final AuthRepositry repository;
 
-  SignInWithEmailAndPassword(this.repository);
+  SignUp(this.repository);
 
   @override
   Future<Either<Failure, Unit>> call(Params params) async {
-    return await repository.signInWithEmailAndPassword(
+    return await repository.signUp(
         email: params.email, password: params.password);
   }
 }
