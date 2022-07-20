@@ -1,11 +1,9 @@
-import 'package:english_words_trainer/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:english_words_trainer/core/usecases/usecase.dart';
-import 'package:english_words_trainer/features/vocabulary_trainer/domain/repositories/auth_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../core/errors/failures.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../entities/user_entity.dart';
-
+import '../repositories/auth_repository.dart';
 
 class GetSignedInUser extends Usecase<UserEntity, NoParams> {
   final AuthRepositry repository;
@@ -13,7 +11,7 @@ class GetSignedInUser extends Usecase<UserEntity, NoParams> {
   GetSignedInUser(this.repository);
 
   @override
-  Future<Either<Failure, UserEntity>> call(NoParams params) async{
+  Future<Either<Failure, UserEntity?>> call(NoParams params) async {
     return await repository.getSignedInUser();
   }
 }

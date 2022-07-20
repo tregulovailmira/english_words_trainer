@@ -8,5 +8,5 @@ abstract class AuthRepositry {
       {required String email, required String password});
   Future<Either<Failure, Unit>> signUp(
       {required String email, required String password});
-  Future<Either<Failure, UserEntity>> getSignedInUser();
+  Future<Either<Failure, UserEntity?>> getSignedInUser();
 }
