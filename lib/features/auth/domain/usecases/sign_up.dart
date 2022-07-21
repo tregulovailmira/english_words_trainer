@@ -1,28 +1,18 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../repositories/auth_repository.dart';
 
-class SignUp extends Usecase<Unit, Params> {
+class SignUp extends Usecase<Unit, AuthParams> {
   final AuthRepositry repository;
 
   SignUp(this.repository);
 
   @override
-  Future<Either<Failure, Unit>> call(Params params) async {
+  Future<Either<Failure, Unit>> call(AuthParams params) async {
     return await repository.signUp(
         email: params.email, password: params.password);
   }
 }
 
-class Params extends Equatable {
-  const Params({required this.email, required this.password});
-
-  final String email;
-  final String password;
-
-  @override
-  List<Object?> get props => [email, password];
-}

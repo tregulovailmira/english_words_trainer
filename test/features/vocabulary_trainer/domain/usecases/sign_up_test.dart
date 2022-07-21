@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:english_words_trainer/core/usecases/usecase.dart';
 import 'package:english_words_trainer/features/auth/domain/repositories/auth_repository.dart';
 import 'package:english_words_trainer/features/auth/domain/usecases/sign_up.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,7 +26,7 @@ void main() {
             email: anyNamed('email'), password: anyNamed('password')))
         .thenAnswer((_) async => const Right(unit));
 
-    final result = await usecase(const Params(email: email, password: password));
+    final result = await usecase(const AuthParams(email: email, password: password));
 
     expect(result, equals(const Right(unit)));
 

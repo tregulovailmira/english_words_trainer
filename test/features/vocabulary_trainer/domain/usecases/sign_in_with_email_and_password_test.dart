@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:english_words_trainer/core/usecases/usecase.dart';
 import 'package:english_words_trainer/features/auth/domain/repositories/auth_repository.dart';
 import 'package:english_words_trainer/features/auth/domain/usecases/sign_in_with_email_and_password.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,7 +31,7 @@ void main() {
           .thenAnswer((_) async => const Right(unit));
       // The "act" phase of the test. Call the not-yet-existent method.
       final result =
-          await usecase(const Params(email: email, password: password));
+          await usecase(const AuthParams(email: email, password: password));
       // UseCase should simply return whatever was returned from the Repository
       expect(result, const Right(unit));
       // Verify that the method has been called on the Repository
