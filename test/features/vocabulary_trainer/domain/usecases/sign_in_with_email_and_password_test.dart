@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 
 import 'auth_repository.mocks.dart';
 
-@GenerateMocks([AuthRepositry])
+@GenerateMocks([AuthRepository])
 void main() {
   late MockAuthRepositry mockAuthRepositry;
   late SignInWithEmailAndPassword usecase;

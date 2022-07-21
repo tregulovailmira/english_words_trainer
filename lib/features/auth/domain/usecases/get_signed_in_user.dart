@@ -6,7 +6,7 @@ import '../entities/user_entity.dart';
 import '../repositories/auth_repository.dart';
 
 class GetSignedInUser extends Usecase<UserEntity, NoParams> {
-  final AuthRepositry repository;
+  final AuthRepository repository;
 
   GetSignedInUser(this.repository);
 

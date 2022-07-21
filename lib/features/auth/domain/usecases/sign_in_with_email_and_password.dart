@@ -5,7 +5,7 @@ import '../../../../core/usecases/usecase.dart';
 import '../repositories/auth_repository.dart';
 
 class SignInWithEmailAndPassword extends Usecase<Unit, AuthParams> {
-  final AuthRepositry repository;
+  final AuthRepository repository;
 
   SignInWithEmailAndPassword(this.repository);
 
@@ -15,4 +15,3 @@ class SignInWithEmailAndPassword extends Usecase<Unit, AuthParams> {
         email: params.email, password: params.password);
   }
 }
-

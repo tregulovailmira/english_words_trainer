@@ -6,7 +6,7 @@ import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/db_datasource.dart';
 
-class AuthRepositoryImpl implements AuthRepositry {
+class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.dbDataSource);
   final DbDataSource dbDataSource;
 

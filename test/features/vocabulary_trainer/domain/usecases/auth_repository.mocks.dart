@@ -27,7 +27,7 @@ class _FakeEither_0<L, R> extends _i1.Fake implements _i2.Either<L, R> {}
 /// A class which mocks [AuthRepositry].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthRepositry extends _i1.Mock implements _i3.AuthRepositry {
+class MockAuthRepositry extends _i1.Mock implements _i3.AuthRepository {
   MockAuthRepositry() {
     _i1.throwOnMissingStub(this);
   }

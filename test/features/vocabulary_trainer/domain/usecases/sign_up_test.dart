@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 
 import 'auth_repository.mocks.dart';
 
-@GenerateMocks([AuthRepositry])
+@GenerateMocks([AuthRepository])
 void main() {
   late SignUp usecase;
   late MockAuthRepositry mockAuthRepositry;
@@ -26,7 +26,8 @@ void main() {
             email: anyNamed('email'), password: anyNamed('password')))
         .thenAnswer((_) async => const Right(unit));
 
-    final result = await usecase(const AuthParams(email: email, password: password));
+    final result =
+        await usecase(const AuthParams(email: email, password: password));
 
     expect(result, equals(const Right(unit)));
 

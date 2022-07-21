@@ -29,7 +29,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
-class _FakeAuthRepositry_0 extends _i1.Fake implements _i2.AuthRepositry {}
+class _FakeAuthRepositry_0 extends _i1.Fake implements _i2.AuthRepository {}
 
 class _FakeEither_1<L, R> extends _i1.Fake implements _i3.Either<L, R> {}
 
@@ -43,9 +43,9 @@ class MockSignInWithEmailAndPassword extends _i1.Mock
   }
 
   @override
-  _i2.AuthRepositry get repository =>
+  _i2.AuthRepository get repository =>
       (super.noSuchMethod(Invocation.getter(#repository),
-          returnValue: _FakeAuthRepositry_0()) as _i2.AuthRepositry);
+          returnValue: _FakeAuthRepositry_0()) as _i2.AuthRepository);
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(_i7.AuthParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
@@ -63,9 +63,9 @@ class MockSignUp extends _i1.Mock implements _i8.SignUp {
   }
 
   @override
-  _i2.AuthRepositry get repository =>
+  _i2.AuthRepository get repository =>
       (super.noSuchMethod(Invocation.getter(#repository),
-          returnValue: _FakeAuthRepositry_0()) as _i2.AuthRepositry);
+          returnValue: _FakeAuthRepositry_0()) as _i2.AuthRepository);
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(_i7.AuthParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
@@ -83,9 +83,9 @@ class MockGetSignedInUser extends _i1.Mock implements _i9.GetSignedInUser {
   }
 
   @override
-  _i2.AuthRepositry get repository =>
+  _i2.AuthRepository get repository =>
       (super.noSuchMethod(Invocation.getter(#repository),
-          returnValue: _FakeAuthRepositry_0()) as _i2.AuthRepositry);
+          returnValue: _FakeAuthRepositry_0()) as _i2.AuthRepository);
   @override
   _i5.Future<_i3.Either<_i6.Failure, _i10.UserEntity?>> call(
           _i7.NoParams? params) =>
