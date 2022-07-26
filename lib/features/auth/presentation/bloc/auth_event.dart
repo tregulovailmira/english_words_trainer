@@ -13,6 +13,9 @@ class SignInWithEmailAndPasswordEvent extends SignInEvent {
 
   SignInWithEmailAndPasswordEvent({required this.email, required this.password})
       : super([email, password]);
+
+  @override
+  List<Object> get props => [email, password];
 }
 
 abstract class SignUpEvent extends Equatable {

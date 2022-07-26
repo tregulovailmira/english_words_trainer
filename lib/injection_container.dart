@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './features/auth/presentation/bloc/auth_bloc.dart';
 import './features/auth/domain/usecases/sign_in_with_email_and_password.dart';
@@ -44,5 +45,8 @@ Future<void> init() async {
 
   //! Core
   sl.registerLazySingleton<StringValidator>(() => EmailValidator());
-  sl.registerLazySingleton<StringValidator>(() => PasswordValidator());
+  // sl.registerLazySingleton<StringValidator>(() => PasswordValidator());
+
+  //! External
+  sl.registerLazySingleton(() => Supabase.instance.client);
 }

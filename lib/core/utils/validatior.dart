@@ -1,5 +1,6 @@
 abstract class StringValidator {
   bool isValid(String str);
+  String? validate(String str);
 }
 
 class EmailValidator implements StringValidator {
@@ -10,11 +11,29 @@ class EmailValidator implements StringValidator {
   bool isValid(String email) {
     return RegExp(pattern).hasMatch(email);
   }
+
+  @override
+  String? validate(String email) {
+    if (isValid(email)) {
+      return null;
+    } else {
+      return "Email should be in format: testemail@mail.com";
+    }
+  }
 }
 
 class PasswordValidator implements StringValidator {
   @override
   bool isValid(String password) {
     return password.length > 6;
+  }
+
+  @override
+  String? validate(String email) {
+    if (isValid(email)) {
+      return null;
+    } else {
+      return "Password length should be more than 6";
+    }
   }
 }
