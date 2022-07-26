@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import './injection_container.dart' as di;
 import './features/auth/presentation/pages/sign_in.dart';
 import './core/pages/splash_page.dart';
 import './test_page.dart';
+import './features/auth/presentation/pages/sign_up.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
           '/': (_) => const SplashPage(),
           '/login': (_) => const SignInPage(),
           '/account': (_) => const AccountPage(),
+          '/register': (_) => const SignUpPage(),
         });
     // home: const SignInPage());
   }

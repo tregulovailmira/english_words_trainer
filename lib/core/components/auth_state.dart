@@ -12,8 +12,6 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
 
   @override
   void onAuthenticated(Session session) {
-    print(session.user);
-    print('mounted -> $mounted');
     if (mounted) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/account', (route) => false);
