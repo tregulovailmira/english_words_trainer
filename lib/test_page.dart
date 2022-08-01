@@ -6,6 +6,7 @@ import './core/components/auth_required_state.dart';
 import './features/auth/presentation/bloc/auth_bloc.dart';
 import './core/widgets/error_message.dart';
 import '../../../../injection_container.dart' as di;
+import 'core/widgets/custom_app_bar.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class AccountState extends AuthRequiredState<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
+      appBar: const CustomAppBar(title: 'Account'),
       body: Column(
         children: <Widget>[
           BlocBuilder<SignedInUserBloc, SignedInUserState>(

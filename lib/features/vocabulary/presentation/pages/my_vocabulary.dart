@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/components/auth_required_state.dart';
 import '../../../../core/widgets/progres_circle.dart';
 import '../../../../injection_container.dart' as di;
@@ -21,11 +22,11 @@ class MyVocabularyPageState extends AuthRequiredState<MyVocabularyPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (blocContext) => di.sl<WordsListBloc>(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Vocabulary'),
+      child: const Scaffold(
+        appBar: CustomAppBar(
+          title: "Vocabulary",
         ),
-        body: const VocabularyList(),
+        body: VocabularyList(),
       ),
     );
   }
