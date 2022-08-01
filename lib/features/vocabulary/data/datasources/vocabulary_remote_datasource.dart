@@ -1,9 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:english_words_trainer/core/errors/exceptions.dart';
-import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-const tableName = 'vocabulary';
+import '../../../../core/errors/exceptions.dart';
+import '../models/word_model.dart';
+
+final tableName = dotenv.env['VOCABULARY_TABLE_NAME']!;
 
 abstract class VocabularyRemoteDataSource {
   Future<Unit> addNewWord(Map<String, dynamic> word);

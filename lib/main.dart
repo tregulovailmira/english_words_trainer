@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import './injection_container.dart' as di;
@@ -11,12 +12,12 @@ import './features/vocabulary/presentation/pages/my_vocabulary.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await di.init();
 
   await Supabase.initialize(
-    url: 'https://apmvfihmxpmpkvrxcarz.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwbXZmaWhteHBtcGt2cnhjYXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTgxMzM5ODksImV4cCI6MTk3MzcwOTk4OX0.OyhgFb1qzPxoVXXjHqUlfjuD3fgNICwTx-AleRDsjyA',
+    url: dotenv.env['SUPABASE_URL'],
+    anonKey: dotenv.env['ANON_KEY'],
   );
   // debugPaintSizeEnabled = true;
   runApp(const MyApp());
