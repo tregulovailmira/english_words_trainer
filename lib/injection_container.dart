@@ -9,6 +9,12 @@ import './features/auth/domain/repositories/auth_repository.dart';
 import './features/auth/data/repositories/auth_repository_impl.dart';
 import './features/auth/data/datasources/db_datasource.dart';
 import './core/utils/validatior.dart';
+import './features/vocabulary/presentation/bloc/words_list/words_list_bloc.dart';
+import './features/vocabulary/domain/usecases/get_words_list.dart';
+import './features/vocabulary/domain/usecases/add_new_word.dart';
+import 'features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
+import 'features/vocabulary/data/repositories/vocabulary_repository_impl.dart';
+import 'features/vocabulary/domain/repositories/vocabulary_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -42,6 +48,25 @@ Future<void> init() async {
   sl.registerLazySingleton<DbDataSource>(
     () => DbDataSourceImpl(client: sl()),
   );
+
+  //! Features - Vocabulary
+
+  // Bloc
+  sl.registerFactory(
+    () => WordsListBloc(sl()),
+  );
+
+  // Usecases
+  sl.registerLazySingleton(() => GetWordsList(sl()));
+  sl.registerSingleton(() => AddNewWord(sl()));
+
+  // Repository
+  sl.registerLazySingleton<VocabularyRepository>(
+      () => VocabularyRepositoryImpl(sl()));
+
+  // Data Sources
+  sl.registerLazySingleton<VocabularyRemoteDataSource>(
+      () => VocabularyRemoteDataSourceImpl(client: sl()));
 
   //! Core
   sl.registerLazySingleton<StringValidator>(() => EmailValidator());

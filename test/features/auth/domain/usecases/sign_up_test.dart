@@ -18,7 +18,7 @@ void main() {
     usecase = SignUp(mockAuthRepositry);
   });
 
-  test('shold regster user calling repository', () async {
+  test('should register user calling repository', () async {
     const email = 'test@test.com';
     const password = 'secretPassword';
 

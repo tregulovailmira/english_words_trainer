@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './core/components/auth_required_state.dart';
 import './features/auth/presentation/bloc/auth_bloc.dart';
-import './features/auth/presentation/widgets/error_message.dart';
+import './core/widgets/error_message.dart';
 import '../../../../injection_container.dart' as di;
 
 class AccountPage extends StatefulWidget {

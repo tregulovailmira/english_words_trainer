@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/components/auth_state.dart';
 import '../../../../core/utils/validatior.dart';
+import '../../../../core/widgets/progres_circle.dart';
+import '../../../../routes.dart';
 import '../bloc/auth_bloc.dart';
 
 class SignInForm extends StatefulWidget {
@@ -61,7 +63,7 @@ class SignInFormState extends AuthState<SignInForm> {
         listener: (context, state) {
           if (state is SignInLoaded) {
             Navigator.of(context)
-                .pushNamedAndRemoveUntil('/account', (route) => false);
+                .pushNamedAndRemoveUntil(Routes.myVocabulary, (route) => false);
           }
           if (state is SignInError) {
             context.showErrorSnackBar(message: state.message);
@@ -113,12 +115,7 @@ class SignInFormState extends AuthState<SignInForm> {
                         return const SizedBox(
                           height: 20,
                           width: 20,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: ProgressCircle(color: Colors.white),
                         );
                       } else {
                         return const Text('Sign in');
