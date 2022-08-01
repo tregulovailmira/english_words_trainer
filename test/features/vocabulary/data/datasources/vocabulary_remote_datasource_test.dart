@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:english_words_trainer/core/errors/exceptions.dart';
 import 'package:english_words_trainer/features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
 import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -16,6 +17,7 @@ import 'vocabulary_remote_datasource_test.mocks.dart';
   PostgrestFilterBuilder
 ])
 void main() {
+  dotenv.testLoad(fileInput: "VOCABULARY_TABLE_NAME='vocabulary'");
   late MockSupabaseClient mockSupabaseClient;
   late MockSupabaseQueryBuilder mockSupabaseQueryBuilder;
   late MockPostgrestBuilder mockPostgrestBuilder;
