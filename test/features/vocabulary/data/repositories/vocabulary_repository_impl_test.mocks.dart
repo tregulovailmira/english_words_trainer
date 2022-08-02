@@ -4,11 +4,10 @@
 
 import 'dart:async' as _i4;
 
-import 'package:dartz/dartz.dart' as _i2;
 import 'package:english_words_trainer/features/vocabulary/data/datasources/vocabulary_remote_datasource.dart'
     as _i3;
 import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart'
-    as _i5;
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -21,7 +20,7 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
-class _FakeUnit_0 extends _i1.Fake implements _i2.Unit {}
+class _FakeWordModel_0 extends _i1.Fake implements _i2.WordModel {}
 
 /// A class which mocks [VocabularyRemoteDataSource].
 ///
@@ -33,13 +32,13 @@ class MockVocabularyRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Unit> addNewWord(Map<String, dynamic>? word) =>
+  _i4.Future<_i2.WordModel> addNewWord(Map<String, dynamic>? word) =>
       (super.noSuchMethod(Invocation.method(#addNewWord, [word]),
-              returnValue: Future<_i2.Unit>.value(_FakeUnit_0()))
-          as _i4.Future<_i2.Unit>);
+              returnValue: Future<_i2.WordModel>.value(_FakeWordModel_0()))
+          as _i4.Future<_i2.WordModel>);
   @override
-  _i4.Future<List<_i5.WordModel>> getListWords(String? userId) =>
+  _i4.Future<List<_i2.WordModel>> getListWords(String? userId) =>
       (super.noSuchMethod(Invocation.method(#getListWords, [userId]),
-              returnValue: Future<List<_i5.WordModel>>.value(<_i5.WordModel>[]))
-          as _i4.Future<List<_i5.WordModel>>);
+              returnValue: Future<List<_i2.WordModel>>.value(<_i2.WordModel>[]))
+          as _i4.Future<List<_i2.WordModel>>);
 }

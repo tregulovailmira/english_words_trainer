@@ -23,10 +23,10 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> addNewWord(Map<String, dynamic> word) async {
+  Future<Either<Failure, WordEntity>> addNewWord(Map<String, dynamic> word) async {
     try {
-      await dataSource.addNewWord(word);
-      return const Right(unit);
+      final result = await dataSource.addNewWord(word);
+      return Right(result);
     } on DataBaseException catch (e) {
       return Left(
           DataBaseFailure(message: e.message, statusCode: e.statusCode));

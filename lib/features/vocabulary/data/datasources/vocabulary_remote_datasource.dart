@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,7 +7,7 @@ import '../models/word_model.dart';
 final tableName = dotenv.env['VOCABULARY_TABLE_NAME']!;
 
 abstract class VocabularyRemoteDataSource {
-  Future<Unit> addNewWord(Map<String, dynamic> word);
+  Future<WordModel> addNewWord(Map<String, dynamic> word);
 
   Future<List<WordModel>> getListWords(String userId);
 }
@@ -19,12 +18,13 @@ class VocabularyRemoteDataSourceImpl implements VocabularyRemoteDataSource {
   VocabularyRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<Unit> addNewWord(Map<String, dynamic> word) async {
+  Future<WordModel> addNewWord(Map<String, dynamic> word) async {
     final response = await client.from(tableName).insert(word).execute();
     if (response.status != 201) {
       throw DataBaseException(response.error!.message, response.status);
     }
-    return unit;
+    final createdWord = WordModel.fromMap(response.data[0]);
+    return createdWord;
   }
 
   @override

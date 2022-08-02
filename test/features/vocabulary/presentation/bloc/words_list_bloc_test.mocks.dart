@@ -10,6 +10,8 @@ import 'package:english_words_trainer/features/vocabulary/domain/entities/word_e
     as _i7;
 import 'package:english_words_trainer/features/vocabulary/domain/repositories/vocabulary_repository.dart'
     as _i2;
+import 'package:english_words_trainer/features/vocabulary/domain/usecases/add_new_word.dart'
+    as _i8;
 import 'package:english_words_trainer/features/vocabulary/domain/usecases/get_words_list.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
@@ -43,10 +45,31 @@ class MockGetWordsList extends _i1.Mock implements _i4.GetWordsList {
       returnValue: _FakeVocabularyRepository_0()) as _i2.VocabularyRepository);
   @override
   _i5.Future<_i3.Either<_i6.Failure, List<_i7.WordEntity>>> call(
-          _i4.Params? params) =>
+          _i4.GetWordsParams? params) =>
       (super.noSuchMethod(Invocation.method(#call, [params]),
               returnValue:
                   Future<_i3.Either<_i6.Failure, List<_i7.WordEntity>>>.value(
                       _FakeEither_1<_i6.Failure, List<_i7.WordEntity>>()))
           as _i5.Future<_i3.Either<_i6.Failure, List<_i7.WordEntity>>>);
+}
+
+/// A class which mocks [AddNewWord].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAddNewWord extends _i1.Mock implements _i8.AddNewWord {
+  MockAddNewWord() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.VocabularyRepository get repository => (super.noSuchMethod(
+      Invocation.getter(#repository),
+      returnValue: _FakeVocabularyRepository_0()) as _i2.VocabularyRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, _i7.WordEntity>> call(
+          _i8.AddNewWordParams? params) =>
+      (super.noSuchMethod(Invocation.method(#call, [params]),
+          returnValue: Future<_i3.Either<_i6.Failure, _i7.WordEntity>>.value(
+              _FakeEither_1<_i6.Failure, _i7.WordEntity>())) as _i5
+          .Future<_i3.Either<_i6.Failure, _i7.WordEntity>>);
 }

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:english_words_trainer/core/errors/exceptions.dart';
 import 'package:english_words_trainer/features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
 import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart';
@@ -41,12 +40,22 @@ void main() {
       'translation': 'кот',
       'userId': tUserId,
     };
+    const tCreatedWordResponse = {
+      'id': 24,
+      'createdAt': '2022-08-01T13:22:02.80902+00:00',
+      'englishWord': 'cat',
+      'translation': 'кот',
+      'userId': tUserId,
+    };
+
+    final tExpectedResponse = WordModel.fromMap(tCreatedWordResponse);
+
     void setUpSuccessfullResponse() {
       when(mockSupabaseClient.from(any)).thenReturn(mockSupabaseQueryBuilder);
       when(mockSupabaseQueryBuilder.insert(any))
           .thenReturn(mockPostgrestBuilder);
-      when(mockPostgrestBuilder.execute()).thenAnswer(
-          (_) async => const PostgrestResponse(data: [tNewWord], status: 201));
+      when(mockPostgrestBuilder.execute()).thenAnswer((_) async =>
+          const PostgrestResponse(data: [tCreatedWordResponse], status: 201));
     }
 
     void setUpFailureResponse() {
@@ -78,10 +87,10 @@ void main() {
       verifyNoMoreInteractions(mockPostgrestBuilder);
     });
 
-    test('should return unit when adding new word was successful', () async {
+    test('should return WordModel when adding new word was successful', () async {
       setUpSuccessfullResponse();
       final result = await vocabularyRemoteDataSourceImpl.addNewWord(tNewWord);
-      expect(result, equals(unit));
+      expect(result, equals(tExpectedResponse));
     });
 
     test('should return DataBaseException when status code is not 201',

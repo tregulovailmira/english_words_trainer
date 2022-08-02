@@ -40,7 +40,7 @@ void main() {
     when(mockVocabularyRepository.getWordsList(any))
         .thenAnswer((_) async => Right(tWords));
 
-    final result = await usecase(const Params(userId: tUserId));
+    final result = await usecase(const GetWordsParams(userId: tUserId));
 
     expect(result, equals(Right(tWords)));
     verify(mockVocabularyRepository.getWordsList(tUserId));

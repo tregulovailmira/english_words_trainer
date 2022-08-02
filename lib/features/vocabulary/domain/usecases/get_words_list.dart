@@ -6,19 +6,19 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/word_entity.dart';
 import '../repositories/vocabulary_repository.dart';
 
-class GetWordsList extends Usecase<List<WordEntity>, Params> {
+class GetWordsList extends Usecase<List<WordEntity>, GetWordsParams> {
   GetWordsList(this.repository);
 
   final VocabularyRepository repository;
 
   @override
-  Future<Either<Failure, List<WordEntity>>> call(Params params) async {
+  Future<Either<Failure, List<WordEntity>>> call(GetWordsParams params) async {
     return await repository.getWordsList(params.userId);
   }
 }
 
-class Params extends Equatable {
-  const Params({required this.userId});
+class GetWordsParams extends Equatable {
+  const GetWordsParams({required this.userId});
 
   final String userId;
 

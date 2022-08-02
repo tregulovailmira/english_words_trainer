@@ -34,12 +34,12 @@ class MockVocabularyRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i2.Unit>> addNewWord(
+  _i4.Future<_i2.Either<_i5.Failure, _i6.WordEntity>> addNewWord(
           Map<String, dynamic>? word) =>
       (super.noSuchMethod(Invocation.method(#addNewWord, [word]),
-              returnValue: Future<_i2.Either<_i5.Failure, _i2.Unit>>.value(
-                  _FakeEither_0<_i5.Failure, _i2.Unit>()))
-          as _i4.Future<_i2.Either<_i5.Failure, _i2.Unit>>);
+          returnValue: Future<_i2.Either<_i5.Failure, _i6.WordEntity>>.value(
+              _FakeEither_0<_i5.Failure, _i6.WordEntity>())) as _i4
+          .Future<_i2.Either<_i5.Failure, _i6.WordEntity>>);
   @override
   _i4.Future<_i2.Either<_i5.Failure, List<_i6.WordEntity>>> getWordsList(
           String? userId) =>

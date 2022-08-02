@@ -9,7 +9,7 @@ import './features/auth/domain/repositories/auth_repository.dart';
 import './features/auth/data/repositories/auth_repository_impl.dart';
 import './features/auth/data/datasources/db_datasource.dart';
 import './core/utils/validatior.dart';
-import './features/vocabulary/presentation/bloc/words_list/words_list_bloc.dart';
+import './features/vocabulary/presentation/bloc/words_list_bloc.dart';
 import './features/vocabulary/domain/usecases/get_words_list.dart';
 import './features/vocabulary/domain/usecases/add_new_word.dart';
 import 'features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
@@ -53,12 +53,12 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(
-    () => WordsListBloc(sl()),
+    () => WordsListBloc(getWordsList: sl(), addNewWord: sl()),
   );
 
   // Usecases
   sl.registerLazySingleton(() => GetWordsList(sl()));
-  sl.registerSingleton(() => AddNewWord(sl()));
+  sl.registerLazySingleton(() => AddNewWord(sl()));
 
   // Repository
   sl.registerLazySingleton<VocabularyRepository>(

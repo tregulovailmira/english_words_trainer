@@ -15,3 +15,12 @@ class GetWordsEvent extends WordsListEvent {
   @override
   List<Object> get props => [userId];
 }
+
+class AddWordEvent extends WordsListEvent {
+  final Map<String, dynamic> word;
+
+  const AddWordEvent(this.word);
+
+  @override
+  List<Object> get props => [word];
+}

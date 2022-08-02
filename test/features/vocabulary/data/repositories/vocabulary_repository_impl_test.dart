@@ -22,19 +22,28 @@ void main() {
   });
 
   group('addNewWord', () {
+    const tUserId = '12345';
     const tNewWord = {
       'englishWord': 'cat',
       'translation': 'кот',
-      'userId': '12345',
+      'userId': tUserId,
     };
-    test('should retrun unit when adding new word was successful', () async {
+
+    final tExpectedResponse = WordModel(
+      englishWord: 'cat',
+      translation: 'кот',
+      id: 24,
+      createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
+      userId: tUserId,
+    );
+    test('should retrun WordModel when adding new word was successful', () async {
       when(mockVocabularyRemoteDataSource.addNewWord(any))
-          .thenAnswer((_) async => unit);
+          .thenAnswer((_) async => tExpectedResponse);
 
       final result = await vocabularyRepositoryImpl.addNewWord(tNewWord);
 
       verify(mockVocabularyRemoteDataSource.addNewWord(tNewWord));
-      expect(result, equals(const Right(unit)));
+      expect(result, equals(Right(tExpectedResponse)));
     });
 
     test('should return DataBaseFailure if adding new word was unsuccessful',
