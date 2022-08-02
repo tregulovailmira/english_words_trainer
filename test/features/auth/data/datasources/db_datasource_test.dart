@@ -9,7 +9,7 @@ import 'package:english_words_trainer/features/auth/data/datasources/db_datasour
 import 'package:english_words_trainer/features/auth/data/models/user_model.dart';
 
 
-import 'db_datasource_test.mocks.dart';
+import 'mocks/db_datasource_test.mocks.dart';
 
 @GenerateMocks([SupabaseClient, GoTrueClient])
 void main() {

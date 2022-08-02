@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import './auth_bloc_test.mocks.dart';
+import 'mocks/auth_bloc_test.mocks.dart';
 
 @GenerateMocks([SignInWithEmailAndPassword, SignUp, GetSignedInUser])
 void main() {
