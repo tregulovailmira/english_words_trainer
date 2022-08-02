@@ -32,26 +32,16 @@ class SignInFormState extends AuthState<SignInForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String email = '';
-  String password = '';
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
 
   void onSubmitForm() {
     if (_formKey.currentState!.validate()) {
       BlocProvider.of<SignInBloc>(context).add(SignInWithEmailAndPasswordEvent(
-        email: email,
-        password: password,
+        email: emailController.text,
+        password: passwordController.text,
       ));
     }
-  }
-
-  void onEmailChanged(value) {
-    email = value;
-  }
-
-  void onPasswordChanged(value) {
-    password = value;
   }
 
   String? emailValidator(value) => EmailValidator().validate(value!);
@@ -83,7 +73,6 @@ class SignInFormState extends AuthState<SignInForm> {
                     labelText: 'Email',
                   ),
                   autocorrect: false,
-                  onChanged: onEmailChanged,
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -95,7 +84,6 @@ class SignInFormState extends AuthState<SignInForm> {
                       labelText: 'Password'),
                   autocorrect: false,
                   obscureText: true,
-                  onChanged: onPasswordChanged,
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(

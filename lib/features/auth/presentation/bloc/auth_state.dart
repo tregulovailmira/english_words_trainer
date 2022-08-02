@@ -11,8 +11,6 @@ abstract class SignInState extends Equatable {
 
 class SignInInitial extends SignInState {}
 
-class SignInEmpty extends SignInState {}
-
 class SignInLoading extends SignInState {}
 
 class SignInLoaded extends SignInState {}
@@ -37,8 +35,6 @@ abstract class SignUpState extends Equatable {
 
 class SignUpInitial extends SignUpState {}
 
-class SignUpEmpty extends SignUpState {}
-
 class SignUpLoading extends SignUpState {}
 
 class SignUpLoaded extends SignUpState {}
@@ -62,8 +58,6 @@ abstract class SignedInUserState extends Equatable {
 }
 
 class SignedInUserInitial extends SignedInUserState {}
-
-class SignedInUserEmpty extends SignedInUserState {}
 
 class SignedInUserLoading extends SignedInUserState {}
 

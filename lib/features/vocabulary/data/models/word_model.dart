@@ -6,7 +6,7 @@ class WordModel extends WordEntity {
     required String userId,
     required String englishWord,
     required String translation,
-    DateTime? createdAt,
+    required DateTime createdAt,
   }) : super(
           id: id,
           userId: userId,

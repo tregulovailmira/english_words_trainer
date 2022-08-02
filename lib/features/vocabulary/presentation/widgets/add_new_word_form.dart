@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/widgets/progres_circle.dart';
 import '../bloc/words_list_bloc.dart';
 
-class AddNewWordForm extends StatefulWidget {
-  const AddNewWordForm(
+class AddNewWordForm extends StatelessWidget {
+  AddNewWordForm(
       {required this.userId,
       required this.blocContext,
       required this.isLoading,
@@ -15,12 +15,6 @@ class AddNewWordForm extends StatefulWidget {
   final String userId;
   final BuildContext blocContext;
   final bool isLoading;
-
-  @override
-  AddNewWordFormState createState() => AddNewWordFormState();
-}
-
-class AddNewWordFormState extends State<AddNewWordForm> {
   final englishWordController = TextEditingController();
   final translationController = TextEditingController();
 
@@ -28,10 +22,10 @@ class AddNewWordFormState extends State<AddNewWordForm> {
     final word = {
       'englishWord': englishWordController.text,
       'translation': translationController.text,
-      'userId': widget.userId,
+      'userId': userId,
     };
-    BlocProvider.of<WordsListBloc>(widget.blocContext).add(AddWordEvent(word));
-    Navigator.of(context).pop();
+    BlocProvider.of<WordsListBloc>(blocContext).add(AddWordEvent(word));
+    Navigator.of(blocContext).pop();
   }
 
   @override
@@ -68,7 +62,7 @@ class AddNewWordFormState extends State<AddNewWordForm> {
             Expanded(
               child: ElevatedButton(
                 onPressed: onPressedHandler,
-                child: widget.isLoading
+                child: isLoading
                     ? const ProgressCircle(color: Colors.white)
                     : const Text('Add'),
               ),

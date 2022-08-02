@@ -46,6 +46,5 @@ class MyApp extends StatelessWidget {
           Routes.register: (_) => const SignUpPage(),
           Routes.myVocabulary: (_) => const MyVocabularyPage(),
         });
-    // home: const SignInPage());
   }
 }
