@@ -27,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await dbDataSource.sighInWithEmailAndPassword(
           email: email, password: password);
-      return Future.value(const Right(unit));
+      return const Right(unit);
     } on DataBaseException catch (e) {
       return Left(
           DataBaseFailure(message: e.message, statusCode: e.statusCode));
@@ -39,7 +39,7 @@ class AuthRepositoryImpl implements AuthRepository {
       {required String email, required String password}) async {
     try {
       await dbDataSource.sighUp(email: email, password: password);
-      return Future.value(const Right(unit));
+      return const Right(unit);
     } on DataBaseException catch (e) {
       return Left(
           DataBaseFailure(message: e.message, statusCode: e.statusCode));

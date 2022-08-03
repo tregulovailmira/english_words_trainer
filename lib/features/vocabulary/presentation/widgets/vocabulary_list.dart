@@ -16,7 +16,7 @@ class VocabularyList extends StatefulWidget {
 
 class VocabularyListState extends AuthRequiredState<VocabularyList> {
   Future<void> _getWords(String userId) async {
-    BlocProvider.of<WordsListBloc>(context).add(GetWordsEvent(userId));
+    context.read<WordsListBloc>().add(GetWordsEvent(userId));
   }
 
   @override

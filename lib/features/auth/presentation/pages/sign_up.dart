@@ -14,7 +14,7 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-          create: (context) => di.sl<SignUpBloc>(),
+          create: (context) => di.sl<AuthBloc>(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(

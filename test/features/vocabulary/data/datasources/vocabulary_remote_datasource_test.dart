@@ -48,7 +48,7 @@ void main() {
       'userId': tUserId,
     };
 
-    final tExpectedResponse = WordModel.fromMap(tCreatedWordResponse);
+    final tExpectedResponse = WordModel.fromJson(tCreatedWordResponse);
 
     void setUpSuccessfullResponse() {
       when(mockSupabaseClient.from(any)).thenReturn(mockSupabaseQueryBuilder);

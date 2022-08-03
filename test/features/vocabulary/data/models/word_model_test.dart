@@ -4,7 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const tDateString = '2022-07-27T09:58:52+00:00';
-  final tWord = WordModel(
+  final tWordModel = WordModel(
+    id: 123,
+    userId: '345',
+    englishWord: 'cat',
+    translation: 'кот',
+    createdAt: DateTime.parse(tDateString),
+  );
+  final tWordEntity = WordEntity(
     id: 123,
     userId: '345',
     englishWord: 'cat',
@@ -12,30 +19,13 @@ void main() {
     createdAt: DateTime.parse(tDateString),
   );
 
-  test('should be a subclass of WordEntity', () {
-    expect(tWord, isA<WordEntity>());
+  test('should return valid WordModel from WordEntity', () {
+    final result = WordModel.fromDomain(tWordEntity);
+    expect(result, equals(tWordModel));
   });
 
-  test('should return a valid model from Map', () {
-    final tMapWordResponse = {
-      'id': 123,
-      'userId': '345',
-      'englishWord': 'cat',
-      'translation': 'кот',
-      'createdAt': tDateString,
-    };
-    final result = WordModel.fromMap(tMapWordResponse);
-    expect(result, equals(tWord));
-  });
-
-  test('should return valid Map from WordModel', () {
-    final tMapWordRequest = {
-      'id': 123,
-      'userId': '345',
-      'englishWord': 'cat',
-      'translation': 'кот',
-    };
-    final result = tWord.toMap();
-    expect(result, equals(tMapWordRequest));
+    test('should return valid WordEntity from WordModel', () {
+    final result = tWordModel.toDomain();
+    expect(result, equals(tWordEntity));
   });
 }

@@ -23,7 +23,7 @@ class DbDataSourceImpl implements DbDataSource {
       {required String email, required String password}) async {
     final response = await client.auth.signIn(email: email, password: password);
     if (response.statusCode == 200) {
-      return Future.value(unit);
+      return unit;
     } else {
       throw DataBaseException(response.error!.message, response.statusCode);
     }
@@ -33,7 +33,7 @@ class DbDataSourceImpl implements DbDataSource {
   Future<Unit> sighUp({required String email, required String password}) async {
     final response = await client.auth.signUp(email, password);
     if (response.statusCode == 200) {
-      return Future.value(unit);
+      return unit;
     } else {
       throw DataBaseException(response.error!.message, response.statusCode);
     }
@@ -43,9 +43,9 @@ class DbDataSourceImpl implements DbDataSource {
   Future<UserModel?> getSignedInUser() async {
     final user = client.auth.user();
     if (user != null) {
-      return Future.value(UserModel.fromUserObject(user));
+      return UserModel.fromUserObject(user);
     } else {
-      return Future.value(null);
+      return null;
     }
   }
 }

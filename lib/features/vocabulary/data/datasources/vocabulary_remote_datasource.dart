@@ -23,7 +23,7 @@ class VocabularyRemoteDataSourceImpl implements VocabularyRemoteDataSource {
     if (response.status != 201) {
       throw DataBaseException(response.error!.message, response.status);
     }
-    return WordModel.fromMap(response.data[0]);
+    return WordModel.fromJson(response.data[0]);
   }
 
   @override
@@ -37,7 +37,7 @@ class VocabularyRemoteDataSourceImpl implements VocabularyRemoteDataSource {
       throw DataBaseException(response.error!.message, response.status);
     }
     return (response.data as List)
-        .map((word) => WordModel.fromMap(word))
+        .map((word) => WordModel.fromJson(word))
         .toList();
   }
 }

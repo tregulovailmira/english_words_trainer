@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/entities/word_entity.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/usecases/add_new_word.dart';
 import 'package:equatable/equatable.dart';
@@ -17,45 +18,47 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
       : super(const WordsListState()) {
     on<GetWordsEvent>((event, emit) async {
       emit(const WordsListState(isLoading: true));
+
       final wordsOfFailure =
           await getWordsList(GetWordsParams(userId: event.userId));
-      emit(wordsOfFailure.fold(
-        (failure) => WordsListState(
-          errorMessage: _mapFailureToMessage(failure),
-          isError: true,
-          isLoading: false,
-        ),
-        (words) {
-          return WordsListState(
-            isError: false,
-            errorMessage: null,
-            isLoading: false,
-            words: words,
-          );
-        },
-      ));
+
+      emit(_getLoadedOrErrorState(wordsOfFailure));
     });
 
     on<AddWordEvent>(((event, emit) async {
       emit(WordsListState(isLoading: true, words: state.words));
+
       final wordOrFailure =
           await addNewWord(AddNewWordParams(word: event.word));
-      emit(wordOrFailure.fold(
-        (failure) => WordsListState(
-          isError: true,
-          errorMessage: _mapFailureToMessage(failure),
-          isLoading: false,
-          words: state.words,
-        ),
-        (word) => WordsListState(
-          isError: false,
-          errorMessage: null,
-          isLoading: false,
-          words: [...state.words, word],
-        ),
-      ));
+
+      emit(_getLoadedOrErrorState(wordOrFailure, state));
     }));
   }
+
+  WordsListState _getLoadedOrErrorState(
+      Either<Failure, dynamic> failureOrResult,
+      [WordsListState? prevState]) {
+    return failureOrResult.fold(
+      (failure) => _getErrorState(failure, prevState),
+      (result) => _getLoadedState(result, prevState),
+    );
+  }
+
+  WordsListState _getErrorState(Failure failure, [WordsListState? prevState]) =>
+      WordsListState(
+        errorMessage: _mapFailureToMessage(failure),
+        isError: true,
+        isLoading: false,
+        words: prevState != null ? prevState.words : [],
+      );
+
+  WordsListState _getLoadedState(dynamic result, [WordsListState? prevState]) =>
+      WordsListState(
+        isError: false,
+        errorMessage: null,
+        isLoading: false,
+        words: prevState != null ? [...prevState.words, result] : result,
+      );
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {

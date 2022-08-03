@@ -1,13 +1,13 @@
 part of 'auth_bloc.dart';
 
-abstract class SignInEvent extends Equatable {
-  const SignInEvent([props]);
+abstract class AuthEvent extends Equatable {
+  const AuthEvent([props]);
 
   @override
   List<Object> get props => [props];
 }
 
-class SignInWithEmailAndPasswordEvent extends SignInEvent {
+class SignInWithEmailAndPasswordEvent extends AuthEvent {
   final String email;
   final String password;
 
@@ -18,14 +18,7 @@ class SignInWithEmailAndPasswordEvent extends SignInEvent {
   List<Object> get props => [email, password];
 }
 
-abstract class SignUpEvent extends Equatable {
-  const SignUpEvent([props]);
-
-  @override
-  List<Object> get props => [props];
-}
-
-class SignUpNewUser extends SignUpEvent {
+class SignUpNewUser extends AuthEvent {
   final String email;
   final String password;
 
@@ -33,11 +26,4 @@ class SignUpNewUser extends SignUpEvent {
       : super([email, password]);
 }
 
-abstract class SignedInUserEvent extends Equatable {
-  const SignedInUserEvent([props]);
-
-  @override
-  List<Object> get props => [props];
-}
-
-class SignedInUser extends SignedInUserEvent {}
+class SignedInUser extends AuthEvent {}

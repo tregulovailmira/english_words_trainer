@@ -23,15 +23,11 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(
-    () => SignInBloc(signIn: sl()),
-  );
-
-  sl.registerFactory(
-    () => SignUpBloc(signUp: sl()),
-  );
-
-  sl.registerFactory(
-    () => SignedInUserBloc(getUser: sl()),
+    () => AuthBloc(
+      signIn: sl(),
+      signUp: sl(),
+      getUser: sl(),
+    ),
   );
 
   // Usecases

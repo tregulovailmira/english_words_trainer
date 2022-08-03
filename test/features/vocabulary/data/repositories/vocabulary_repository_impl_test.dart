@@ -4,6 +4,7 @@ import 'package:english_words_trainer/core/errors/failures.dart';
 import 'package:english_words_trainer/features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
 import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart';
 import 'package:english_words_trainer/features/vocabulary/data/repositories/vocabulary_repository_impl.dart';
+import 'package:english_words_trainer/features/vocabulary/domain/entities/word_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -36,14 +37,15 @@ void main() {
       createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
       userId: tUserId,
     );
-    test('should retrun WordModel when adding new word was successful', () async {
+    test('should retrun WordEntity when adding new word was successful',
+        () async {
       when(mockVocabularyRemoteDataSource.addNewWord(any))
           .thenAnswer((_) async => tExpectedResponse);
 
       final result = await vocabularyRepositoryImpl.addNewWord(tNewWord);
 
       verify(mockVocabularyRemoteDataSource.addNewWord(tNewWord));
-      expect(result, equals(Right(tExpectedResponse)));
+      expect(result, equals(Right(tExpectedResponse.toDomain())));
     });
 
     test('should return DataBaseFailure if adding new word was unsuccessful',
@@ -61,7 +63,7 @@ void main() {
 
   group('getWordsList', () {
     const tUserId = '12344';
-    final tWordsModelList = [
+    final tWordsModelListFromDataSource = [
       WordModel(
         id: 1,
         userId: tUserId,
@@ -77,15 +79,37 @@ void main() {
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       )
     ];
+
+    final tEpectedResponse = [
+      WordEntity(
+        id: 1,
+        userId: tUserId,
+        englishWord: 'cat',
+        translation: 'кот',
+        createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
+      ),
+      WordEntity(
+        id: 2,
+        userId: tUserId,
+        englishWord: 'dog',
+        translation: 'собака',
+        createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
+      )
+    ];
     test('should retrun WordEntity when getting words was successful',
         () async {
       when(mockVocabularyRemoteDataSource.getListWords(any))
-          .thenAnswer((_) async => tWordsModelList);
+          .thenAnswer((_) async => tWordsModelListFromDataSource);
 
       final result = await vocabularyRepositoryImpl.getWordsList(tUserId);
 
       verify(mockVocabularyRemoteDataSource.getListWords(tUserId));
-      expect(result, equals(Right(tWordsModelList)));
+      result.fold((left) => fail('test failed'), (right) {
+        expect(
+          right,
+          equals(tEpectedResponse),
+        );
+      });
     });
 
     test('should return DataBaseFailure if getting new words was unsuccessful',

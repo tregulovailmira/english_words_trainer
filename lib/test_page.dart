@@ -19,7 +19,7 @@ class AccountPageState extends AuthRequiredState<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (blocContext) => di.sl<SignedInUserBloc>(),
+      create: (blocContext) => di.sl<AuthBloc>(),
       child: const Account(),
     );
   }
@@ -38,7 +38,7 @@ class AccountState extends AuthRequiredState<Account> {
 
   /// Called once a user id is received within `onAuthenticated()`
   Future<void> _getProfile(String userId) async {
-    BlocProvider.of<SignedInUserBloc>(context).add(SignedInUser());
+    context.read<AuthBloc>().add(SignedInUser());
   }
 
   @override
@@ -62,17 +62,16 @@ class AccountState extends AuthRequiredState<Account> {
       appBar: const CustomAppBar(title: 'Account'),
       body: Column(
         children: <Widget>[
-          BlocBuilder<SignedInUserBloc, SignedInUserState>(
-              builder: (blocContext, state) {
-            if (state is SignedInUserLoading) {
+          BlocBuilder<AuthBloc, AuthUserState>(builder: (blocContext, state) {
+            if (state is AuthLoading) {
               return const Center(
                   child: CircularProgressIndicator(
                 strokeWidth: 2,
                 color: Colors.white,
               ));
-            } else if (state is SignedInUserError) {
+            } else if (state is AuthError) {
               return ErrorMessage(state.props[0] as String);
-            } else if (state is SignedInUserLoaded) {
+            } else if (state is AuthLoaded) {
               final String? email = state.user?.email;
               _emailController.text = email ?? 'test';
               _phoneController.text = state.user?.phone ?? 'test';

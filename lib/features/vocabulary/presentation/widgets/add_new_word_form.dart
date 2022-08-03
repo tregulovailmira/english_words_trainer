@@ -24,7 +24,7 @@ class AddNewWordForm extends StatelessWidget {
       'translation': translationController.text,
       'userId': userId,
     };
-    BlocProvider.of<WordsListBloc>(blocContext).add(AddWordEvent(word));
+    blocContext.read<WordsListBloc>().add(AddWordEvent(word));
     Navigator.of(blocContext).pop();
   }
 

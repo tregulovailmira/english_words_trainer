@@ -16,6 +16,11 @@ class SignInForm extends StatefulWidget {
 }
 
 class SignInFormState extends AuthState<SignInForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
+
   @override
   void initState() {
     super.initState();
@@ -30,32 +35,26 @@ class SignInFormState extends AuthState<SignInForm> {
     super.dispose();
   }
 
-  final _formKey = GlobalKey<FormState>();
-
-  late final TextEditingController emailController;
-  late final TextEditingController passwordController;
-
   void onSubmitForm() {
     if (_formKey.currentState!.validate()) {
-      BlocProvider.of<SignInBloc>(context).add(SignInWithEmailAndPasswordEvent(
-        email: emailController.text,
-        password: passwordController.text,
-      ));
+      context.read<AuthBloc>().add(
+            SignInWithEmailAndPasswordEvent(
+              email: emailController.text,
+              password: passwordController.text,
+            ),
+          );
     }
   }
 
-  String? emailValidator(value) => EmailValidator().validate(value!);
-  String? passwordValidator(value) => PasswordValidator().validate(value!);
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SignInBloc, SignInState>(
+    return BlocConsumer<AuthBloc, AuthUserState>(
         listener: (context, state) {
-          if (state is SignInLoaded) {
+          if (state is AuthLoaded) {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil(Routes.myVocabulary, (route) => false);
           }
-          if (state is SignInError) {
+          if (state is AuthError) {
             context.showErrorSnackBar(message: state.message);
           }
         },
@@ -65,7 +64,7 @@ class SignInFormState extends AuthState<SignInForm> {
               children: <Widget>[
                 const SizedBox(height: 30),
                 TextFormField(
-                  validator: emailValidator,
+                  validator: (value) => EmailValidator().validate(value!),
                   controller: emailController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -76,7 +75,7 @@ class SignInFormState extends AuthState<SignInForm> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  validator: passwordValidator,
+                  validator: (value) => PasswordValidator().validate(value!),
                   controller: passwordController,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -87,28 +86,24 @@ class SignInFormState extends AuthState<SignInForm> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                    style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                          const Size(150, 55),
-                        ),
-                        textStyle: MaterialStateProperty.all(const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 40))),
-                    onPressed: onSubmitForm,
-                    child: BlocBuilder<SignInBloc, SignInState>(
-                        builder: (context, state) {
-                      if (state is SignInLoading) {
-                        return const SizedBox(
+                  style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(150, 55),
+                      ),
+                      textStyle: MaterialStateProperty.all(const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 40))),
+                  onPressed: onSubmitForm,
+                  child: state is AuthLoading
+                      ? const SizedBox(
                           height: 20,
                           width: 20,
                           child: ProgressCircle(color: Colors.white),
-                        );
-                      } else {
-                        return const Text('Sign in');
-                      }
-                    })),
+                        )
+                      : const Text('Sign in'),
+                )
               ],
             )));
   }

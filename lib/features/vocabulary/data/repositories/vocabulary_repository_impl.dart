@@ -15,7 +15,7 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
   Future<Either<Failure, List<WordEntity>>> getWordsList(String userId) async {
     try {
       final result = await dataSource.getListWords(userId);
-      return Right(result);
+      return Right(result.map((word) => word.toDomain()).toList());
     } on DataBaseException catch (e) {
       return Left(
           DataBaseFailure(message: e.message, statusCode: e.statusCode));
@@ -23,10 +23,11 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
   }
 
   @override
-  Future<Either<Failure, WordEntity>> addNewWord(Map<String, dynamic> word) async {
+  Future<Either<Failure, WordEntity>> addNewWord(
+      Map<String, dynamic> word) async {
     try {
       final result = await dataSource.addNewWord(word);
-      return Right(result);
+      return Right(result.toDomain());
     } on DataBaseException catch (e) {
       return Left(
           DataBaseFailure(message: e.message, statusCode: e.statusCode));
