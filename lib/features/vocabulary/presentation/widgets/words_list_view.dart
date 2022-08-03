@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/word_entity.dart';
 
 class WordsListView extends StatelessWidget {
-  const WordsListView({Key? key, required this.wordsList}) : super(key: key);
+  const WordsListView({required this.wordsList, Key? key}) : super(key: key);
 
   final List<WordEntity> wordsList;
 

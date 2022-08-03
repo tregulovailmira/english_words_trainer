@@ -7,9 +7,9 @@ import '../entities/word_entity.dart';
 import '../repositories/vocabulary_repository.dart';
 
 class GetWordsList extends Usecase<List<WordEntity>, GetWordsParams> {
-  GetWordsList(this.repository);
-
   final VocabularyRepository repository;
+
+  GetWordsList(this.repository);
 
   @override
   Future<Either<Failure, List<WordEntity>>> call(GetWordsParams params) async {

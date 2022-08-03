@@ -17,7 +17,7 @@ class EmailValidator implements StringValidator {
     if (isValid(email)) {
       return null;
     } else {
-      return "Email should be in format: testemail@mail.com";
+      return 'Email should be in format: testemail@mail.com';
     }
   }
 }
@@ -33,7 +33,7 @@ class PasswordValidator implements StringValidator {
     if (isValid(email)) {
       return null;
     } else {
-      return "Password length should be more than 6";
+      return 'Password length should be more than 6';
     }
   }
 }

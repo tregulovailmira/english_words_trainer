@@ -1,10 +1,10 @@
-import 'package:english_words_trainer/features/auth/domain/usecases/get_signed_in_user.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:english_words_trainer/core/errors/failures.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/errors/failures.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/user_entity.dart';
+import '../../domain/usecases/get_signed_in_user.dart';
 import '../../domain/usecases/sign_in_with_email_and_password.dart';
 import '../../domain/usecases/sign_up.dart';
 

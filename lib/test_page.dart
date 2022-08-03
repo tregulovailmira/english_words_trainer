@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './core/components/auth_required_state.dart';
-import './features/auth/presentation/bloc/auth_bloc.dart';
 import './core/widgets/error_message.dart';
+import './features/auth/presentation/bloc/auth_bloc.dart';
 import '../../../../injection_container.dart' as di;
 import 'core/widgets/custom_app_bar.dart';
 

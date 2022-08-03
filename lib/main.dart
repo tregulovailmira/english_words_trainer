@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import './injection_container.dart' as di;
-import './features/auth/presentation/pages/sign_in.dart';
+
 import './core/pages/splash_page.dart';
-import './test_page.dart';
+import './features/auth/presentation/pages/sign_in.dart';
 import './features/auth/presentation/pages/sign_up.dart';
-import './routes.dart';
 import './features/vocabulary/presentation/pages/my_vocabulary.dart';
+import './injection_container.dart' as di;
+import './routes.dart';
+import './test_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: '.env');
   await di.init();
 
   await Supabase.initialize(

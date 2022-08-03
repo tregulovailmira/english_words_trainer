@@ -7,8 +7,9 @@ import '../../domain/repositories/auth_repository.dart';
 import '../datasources/db_datasource.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this.dbDataSource);
   final DbDataSource dbDataSource;
+
+  AuthRepositoryImpl(this.dbDataSource);
 
   @override
   Future<Either<Failure, UserEntity?>> getSignedInUser() async {

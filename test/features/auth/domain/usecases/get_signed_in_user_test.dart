@@ -21,9 +21,9 @@ void main() {
 
   test('should get signed in user via repository', () async {
     const user = UserEntity(
-      id: "90674aec-d6cb-402f-b8da-0254e9425c43",
-      email: "megegi7024@storypo.com",
-      phone: "",
+      id: '90674aec-d6cb-402f-b8da-0254e9425c43',
+      email: 'megegi7024@storypo.com',
+      phone: '',
     );
     when(mockAuthRepository.getSignedInUser())
         .thenAnswer((_) async => const Right(user));

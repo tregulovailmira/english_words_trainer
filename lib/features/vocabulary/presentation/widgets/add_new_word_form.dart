@@ -5,18 +5,18 @@ import '../../../../core/widgets/progres_circle.dart';
 import '../bloc/words_list_bloc.dart';
 
 class AddNewWordForm extends StatelessWidget {
+  final String userId;
+  final BuildContext blocContext;
+  final bool isLoading;
+  final englishWordController = TextEditingController();
+  final translationController = TextEditingController();
+
   AddNewWordForm(
       {required this.userId,
       required this.blocContext,
       required this.isLoading,
       Key? key})
       : super(key: key);
-
-  final String userId;
-  final BuildContext blocContext;
-  final bool isLoading;
-  final englishWordController = TextEditingController();
-  final translationController = TextEditingController();
 
   void onPressedHandler() {
     final word = {

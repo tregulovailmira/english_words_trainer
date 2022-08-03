@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:english_words_trainer/core/errors/exceptions.dart';
 import 'package:english_words_trainer/core/errors/failures.dart';
 import 'package:english_words_trainer/features/auth/data/datasources/db_datasource.dart';
 import 'package:english_words_trainer/features/auth/data/models/user_model.dart';
 import 'package:english_words_trainer/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 import 'mocks/auth_repository_impl_test.mocks.dart';
 
@@ -72,7 +72,7 @@ void main() {
 
   group('getSignedInUser', () {
     const tUserModel =
-        UserModel(id: "123", email: 'test@test.com', phone: '123456');
+        UserModel(id: '123', email: 'test@test.com', phone: '123456');
     test('should return UserEntity when signed in user exists', () async {
       when(mockDbDataSource.getSignedInUser())
           .thenAnswer((_) async => tUserModel);

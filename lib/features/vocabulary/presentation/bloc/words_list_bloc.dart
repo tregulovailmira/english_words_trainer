@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:english_words_trainer/features/vocabulary/domain/entities/word_entity.dart';
-import 'package:english_words_trainer/features/vocabulary/domain/usecases/add_new_word.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/errors/failures.dart';
+import '../../domain/entities/word_entity.dart';
+import '../../domain/usecases/add_new_word.dart';
 import '../../domain/usecases/get_words_list.dart';
 
 part './words_list_event.dart';

@@ -1,10 +1,10 @@
-import 'package:english_words_trainer/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/components/auth_required_state.dart';
+import '../../../../core/utils/constants.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../injection_container.dart' as di;
 import '../bloc/words_list_bloc.dart';
 import '../widgets/add_new_word_form.dart';
@@ -50,7 +50,7 @@ class MyVocabularyPageState extends AuthRequiredState<MyVocabularyPage> {
         },
         builder: (blocContext, state) => Scaffold(
           appBar: const CustomAppBar(
-            title: "Vocabulary",
+            title: 'Vocabulary',
           ),
           body: const VocabularyList(),
           floatingActionButton: FloatingActionButton(

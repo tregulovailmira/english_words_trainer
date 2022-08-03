@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../../routes.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key, required this.title}) : super(key: key);
   final String title;
   static const _height = 55.0;
+
+  const CustomAppBar({required this.title, Key? key}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(_height);

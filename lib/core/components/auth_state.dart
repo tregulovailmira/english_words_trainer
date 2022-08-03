@@ -1,8 +1,8 @@
-import 'package:english_words_trainer/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../routes.dart';
+import '../utils/constants.dart';
 
 class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   @override

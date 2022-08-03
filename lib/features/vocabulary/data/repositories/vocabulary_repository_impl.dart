@@ -7,9 +7,9 @@ import '../../domain/repositories/vocabulary_repository.dart';
 import '../datasources/vocabulary_remote_datasource.dart';
 
 class VocabularyRepositoryImpl implements VocabularyRepository {
-  VocabularyRepositoryImpl(this.dataSource);
-
   final VocabularyRemoteDataSource dataSource;
+
+  VocabularyRepositoryImpl(this.dataSource);
 
   @override
   Future<Either<Failure, List<WordEntity>>> getWordsList(String userId) async {

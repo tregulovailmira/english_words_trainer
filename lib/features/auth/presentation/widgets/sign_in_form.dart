@@ -1,8 +1,8 @@
-import 'package:english_words_trainer/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/components/auth_state.dart';
+import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/validatior.dart';
 import '../../../../core/widgets/progres_circle.dart';
 import '../../../../routes.dart';
