@@ -5,7 +5,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/components/auth_required_state.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../injection_container.dart' as di;
 import '../bloc/words_list_bloc.dart';
 import '../widgets/add_new_word_form.dart';
 import '../widgets/vocabulary_list.dart';
@@ -40,23 +39,20 @@ class MyVocabularyPageState extends AuthRequiredState<MyVocabularyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<WordsListBloc>(
-      create: (blocContext) => di.sl<WordsListBloc>(),
-      child: BlocConsumer<WordsListBloc, WordsListState>(
-        listener: (context, state) {
-          if (state.isError) {
-            context.showErrorSnackBar(message: state.errorMessage!);
-          }
-        },
-        builder: (blocContext, state) => Scaffold(
-          appBar: const CustomAppBar(
-            title: 'Vocabulary',
-          ),
-          body: const VocabularyList(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: _openForm(blocContext, state.isLoading, state.isError),
-            child: const Icon(Icons.add),
-          ),
+    return BlocConsumer<WordsListBloc, WordsListState>(
+      listener: (context, state) {
+        if (state.isError) {
+          context.showErrorSnackBar(message: state.errorMessage!);
+        }
+      },
+      builder: (blocContext, state) => Scaffold(
+        appBar: const CustomAppBar(
+          title: 'Vocabulary',
+        ),
+        body: const VocabularyList(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _openForm(blocContext, state.isLoading, state.isError),
+          child: const Icon(Icons.add),
         ),
       ),
     );
