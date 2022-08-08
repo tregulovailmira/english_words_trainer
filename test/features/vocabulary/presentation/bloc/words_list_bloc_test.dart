@@ -38,7 +38,9 @@ void main() {
     mockGetWordsList = MockGetWordsList();
     mockAddNewWord = MockAddNewWord();
     wordsListBloc = WordsListBloc(
-        getWordsList: mockGetWordsList, addNewWord: mockAddNewWord);
+      getWordsList: mockGetWordsList,
+      addNewWord: mockAddNewWord,
+    );
   });
 
   test('initial state should be empty', () {
@@ -75,14 +77,16 @@ void main() {
       'should emit state in correct order when getting word was unsuccessful',
       () {
         when(mockGetWordsList(any)).thenAnswer(
-            (_) async => Left(DataBaseFailure(message: 'DB error')));
+          (_) async => Left(DataBaseFailure(message: 'DB error')),
+        );
         final expectedStates = [
           const WordsListState(isLoading: true, isError: false, words: []),
           const WordsListState(
-              isError: true,
-              isLoading: false,
-              errorMessage: 'DB error',
-              words: []),
+            isError: true,
+            isLoading: false,
+            errorMessage: 'DB error',
+            words: [],
+          ),
         ];
 
         expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
@@ -142,7 +146,10 @@ void main() {
           WordsListState(isLoading: false, words: tWordsList, isError: false),
           WordsListState(isLoading: true, isError: false, words: tWordsList),
           WordsListState(
-              isLoading: false, isError: false, words: tUpdatedWordsList),
+            isLoading: false,
+            isError: false,
+            words: tUpdatedWordsList,
+          ),
         ];
 
         expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
@@ -157,16 +164,18 @@ void main() {
       () {
         when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
         when(mockAddNewWord(any)).thenAnswer(
-            (_) async => Left(DataBaseFailure(message: 'DB error')));
+          (_) async => Left(DataBaseFailure(message: 'DB error')),
+        );
         final expectedStates = [
           const WordsListState(isLoading: true, isError: false, words: []),
           WordsListState(isLoading: false, words: tWordsList, isError: false),
           WordsListState(isLoading: true, isError: false, words: tWordsList),
           WordsListState(
-              isLoading: false,
-              isError: true,
-              words: tWordsList,
-              errorMessage: 'DB error'),
+            isLoading: false,
+            isError: true,
+            words: tWordsList,
+            errorMessage: 'DB error',
+          ),
         ];
 
         expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));

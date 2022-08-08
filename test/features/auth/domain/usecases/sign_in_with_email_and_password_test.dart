@@ -26,17 +26,24 @@ void main() {
       // "On the fly" implementation of the Repository using the Mockito package.
       // When getConcreteNumberTrivia is called with any argument, always answer with
       // the Right "side" of Either containing a test NumberTrivia object.
-      when(mockAuthRepositry.signInWithEmailAndPassword(
-              email: anyNamed('email'), password: anyNamed('password')))
-          .thenAnswer((_) async => const Right(unit));
+      when(
+        mockAuthRepositry.signInWithEmailAndPassword(
+          email: anyNamed('email'),
+          password: anyNamed('password'),
+        ),
+      ).thenAnswer((_) async => const Right(unit));
       // The "act" phase of the test. Call the not-yet-existent method.
       final result =
           await usecase(const AuthParams(email: email, password: password));
       // UseCase should simply return whatever was returned from the Repository
       expect(result, const Right(unit));
       // Verify that the method has been called on the Repository
-      verify(mockAuthRepositry.signInWithEmailAndPassword(
-          email: email, password: password));
+      verify(
+        mockAuthRepositry.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      );
       // Only the above method should be called and nothing more.
       verifyNoMoreInteractions(mockAuthRepositry);
     },

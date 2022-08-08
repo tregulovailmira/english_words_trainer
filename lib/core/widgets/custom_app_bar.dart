@@ -25,7 +25,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 title: const Text('Account'),
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      Routes.account, (route) => false);
+                    Routes.account,
+                    (route) => false,
+                  );
                 },
               ),
             ),
@@ -36,7 +38,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 title: const Text('My Vocabulary'),
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      Routes.myVocabulary, (route) => false);
+                    Routes.myVocabulary,
+                    (route) => false,
+                  );
                 },
               ),
             ),
@@ -46,7 +50,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 title: const Text('Trainer'),
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      Routes.trainer, (route) => false);
+                    Routes.trainer,
+                    (route) => false,
+                  );
                 },
               ),
             ),

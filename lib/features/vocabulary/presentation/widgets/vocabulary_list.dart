@@ -30,14 +30,16 @@ class VocabularyListState extends AuthRequiredState<VocabularyList> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WordsListBloc, WordsListState>(
-        builder: (blocContext, state) {
-      if (state.isLoading) {
-        return ProgressCircle(color: Theme.of(context).colorScheme.primary);
-      } else {
-        return Padding(
+      builder: (blocContext, state) {
+        if (state.isLoading) {
+          return ProgressCircle(color: Theme.of(context).colorScheme.primary);
+        } else {
+          return Padding(
             padding: const EdgeInsets.all(15),
-            child: WordsListView(wordsList: state.words));
-      }
-    });
+            child: WordsListView(wordsList: state.words),
+          );
+        }
+      },
+    );
   }
 }

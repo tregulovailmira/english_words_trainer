@@ -11,12 +11,12 @@ class AddNewWordForm extends StatelessWidget {
   final englishWordController = TextEditingController();
   final translationController = TextEditingController();
 
-  AddNewWordForm(
-      {required this.userId,
-      required this.blocContext,
-      required this.isLoading,
-      Key? key})
-      : super(key: key);
+  AddNewWordForm({
+    required this.userId,
+    required this.blocContext,
+    required this.isLoading,
+    Key? key,
+  }) : super(key: key);
 
   void onPressedHandler() {
     final word = {
@@ -71,16 +71,17 @@ class AddNewWordForm extends StatelessWidget {
               width: 10,
             ),
             Expanded(
-                child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(Colors.grey.shade600),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.grey.shade600),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            )),
+            ),
           ],
         )
       ],

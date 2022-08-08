@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class NavigateModeButton extends StatelessWidget {
   final String route;
   final String buttonText;
-  const NavigateModeButton(
-      {required this.buttonText, required this.route, Key? key})
-      : super(key: key);
+  const NavigateModeButton({
+    required this.buttonText,
+    required this.route,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -24,34 +24,55 @@ void main() {
 
   group('signInWithEmailAndPassword', () {
     test('should return unit when signin in is successful', () async {
-      when(mockDbDataSource.sighInWithEmailAndPassword(
-              email: anyNamed('email'), password: anyNamed('password')))
-          .thenAnswer((_) async => unit);
+      when(
+        mockDbDataSource.sighInWithEmailAndPassword(
+          email: anyNamed('email'),
+          password: anyNamed('password'),
+        ),
+      ).thenAnswer((_) async => unit);
       final result = await authRepositoryImpl.signInWithEmailAndPassword(
-          email: email, password: password);
-      verify(mockDbDataSource.sighInWithEmailAndPassword(
-          email: email, password: password));
+        email: email,
+        password: password,
+      );
+      verify(
+        mockDbDataSource.sighInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      );
       expect(result, equals(const Right(unit)));
     });
 
     test('should return DatabaseFailure when signin in is unsuccessful',
         () async {
-      when(mockDbDataSource.sighInWithEmailAndPassword(
-              email: anyNamed('email'), password: anyNamed('password')))
-          .thenThrow(DataBaseException('DB error'));
+      when(
+        mockDbDataSource.sighInWithEmailAndPassword(
+          email: anyNamed('email'),
+          password: anyNamed('password'),
+        ),
+      ).thenThrow(DataBaseException('DB error'));
       final result = await authRepositoryImpl.signInWithEmailAndPassword(
-          email: email, password: password);
-      verify(mockDbDataSource.sighInWithEmailAndPassword(
-          email: email, password: password));
+        email: email,
+        password: password,
+      );
+      verify(
+        mockDbDataSource.sighInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ),
+      );
       expect(result, equals(Left(DataBaseFailure(message: 'DB error'))));
     });
   });
 
   group('signUp', () {
     test('should return unit when signin up is successful', () async {
-      when(mockDbDataSource.sighUp(
-              email: anyNamed('email'), password: anyNamed('password')))
-          .thenAnswer((_) async => unit);
+      when(
+        mockDbDataSource.sighUp(
+          email: anyNamed('email'),
+          password: anyNamed('password'),
+        ),
+      ).thenAnswer((_) async => unit);
       final result =
           await authRepositoryImpl.signUp(email: email, password: password);
       verify(mockDbDataSource.sighUp(email: email, password: password));
@@ -60,9 +81,12 @@ void main() {
 
     test('should return DatabaseFailure when signin up is unsuccessful',
         () async {
-      when(mockDbDataSource.sighUp(
-              email: anyNamed('email'), password: anyNamed('password')))
-          .thenThrow(DataBaseException('DB error'));
+      when(
+        mockDbDataSource.sighUp(
+          email: anyNamed('email'),
+          password: anyNamed('password'),
+        ),
+      ).thenThrow(DataBaseException('DB error'));
       final result =
           await authRepositoryImpl.signUp(email: email, password: password);
       verify(mockDbDataSource.sighUp(email: email, password: password));

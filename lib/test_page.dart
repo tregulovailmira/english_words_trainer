@@ -62,41 +62,44 @@ class AccountState extends AuthRequiredState<Account> {
       appBar: const CustomAppBar(title: 'Account'),
       body: Column(
         children: <Widget>[
-          BlocBuilder<AuthBloc, AuthUserState>(builder: (blocContext, state) {
-            if (state is AuthLoading) {
-              return const Center(
+          BlocBuilder<AuthBloc, AuthUserState>(
+            builder: (blocContext, state) {
+              if (state is AuthLoading) {
+                return const Center(
                   child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: Colors.white,
-              ));
-            } else if (state is AuthError) {
-              return ErrorMessage(state.props[0] as String);
-            } else if (state is AuthLoaded) {
-              final String? email = state.user?.email;
-              _emailController.text = email ?? 'test';
-              _phoneController.text = state.user?.phone ?? 'test';
-              return Column(
-                children: [
-                  TextFormField(
-                    readOnly: true,
-                    controller: _emailController,
-                    decoration: const InputDecoration(labelText: 'User Name'),
+                    strokeWidth: 2,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 18),
-                  TextFormField(
-                    readOnly: true,
-                    controller: _phoneController,
-                    decoration: const InputDecoration(labelText: 'Website'),
-                  ),
-                  const SizedBox(height: 18),
-                ],
-              );
-            } else {
-              return const Center(
-                child: Text('test'),
-              );
-            }
-          }),
+                );
+              } else if (state is AuthError) {
+                return ErrorMessage(state.props[0] as String);
+              } else if (state is AuthLoaded) {
+                final String? email = state.user?.email;
+                _emailController.text = email ?? 'test';
+                _phoneController.text = state.user?.phone ?? 'test';
+                return Column(
+                  children: [
+                    TextFormField(
+                      readOnly: true,
+                      controller: _emailController,
+                      decoration: const InputDecoration(labelText: 'User Name'),
+                    ),
+                    const SizedBox(height: 18),
+                    TextFormField(
+                      readOnly: true,
+                      controller: _phoneController,
+                      decoration: const InputDecoration(labelText: 'Website'),
+                    ),
+                    const SizedBox(height: 18),
+                  ],
+                );
+              } else {
+                return const Center(
+                  child: Text('test'),
+                );
+              }
+            },
+          ),
         ],
       ),
     );

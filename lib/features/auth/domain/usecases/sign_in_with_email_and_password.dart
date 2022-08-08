@@ -12,6 +12,8 @@ class SignInWithEmailAndPassword extends Usecase<Unit, AuthParams> {
   @override
   Future<Either<Failure, Unit>> call(AuthParams params) async {
     return await repository.signInWithEmailAndPassword(
-        email: params.email, password: params.password);
+      email: params.email,
+      password: params.password,
+    );
   }
 }

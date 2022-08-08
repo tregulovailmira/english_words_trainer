@@ -25,19 +25,22 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
       emit(_getLoadedOrErrorState(wordsOfFailure));
     });
 
-    on<AddWordEvent>(((event, emit) async {
-      emit(WordsListState(isLoading: true, words: state.words));
+    on<AddWordEvent>(
+      ((event, emit) async {
+        emit(WordsListState(isLoading: true, words: state.words));
 
-      final wordOrFailure =
-          await addNewWord(AddNewWordParams(word: event.word));
+        final wordOrFailure =
+            await addNewWord(AddNewWordParams(word: event.word));
 
-      emit(_getLoadedOrErrorState(wordOrFailure, state));
-    }));
+        emit(_getLoadedOrErrorState(wordOrFailure, state));
+      }),
+    );
   }
 
   WordsListState _getLoadedOrErrorState(
-      Either<Failure, dynamic> failureOrResult,
-      [WordsListState? prevState]) {
+    Either<Failure, dynamic> failureOrResult, [
+    WordsListState? prevState,
+  ]) {
     return failureOrResult.fold(
       (failure) => _getErrorState(failure, prevState),
       (result) => _getLoadedState(result, prevState),

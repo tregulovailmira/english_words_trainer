@@ -6,9 +6,11 @@ class GuessWordForm extends StatefulWidget {
   final String guessWordOrPhrase;
   final Function onSubmit;
 
-  const GuessWordForm(
-      {required this.guessWordOrPhrase, required this.onSubmit, Key? key})
-      : super(key: key);
+  const GuessWordForm({
+    required this.guessWordOrPhrase,
+    required this.onSubmit,
+    Key? key,
+  }) : super(key: key);
 
   @override
   GuessWordFormState createState() => GuessWordFormState();

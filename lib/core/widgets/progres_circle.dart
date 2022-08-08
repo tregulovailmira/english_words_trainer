@@ -7,9 +7,10 @@ class ProgressCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: CircularProgressIndicator(
-      strokeWidth: 2,
-      color: color,
-    ));
+      child: CircularProgressIndicator(
+        strokeWidth: 2,
+        color: color,
+      ),
+    );
   }
 }

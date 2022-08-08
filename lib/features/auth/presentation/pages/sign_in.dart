@@ -14,25 +14,31 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-          create: (context) => di.sl<AuthBloc>(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Login to EW trainer',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 35,
-                      )),
-                  const SignInForm(),
-                  const SizedBox(height: 15),
-                  const RedirectButton(
-                      Routes.register, 'Not registered yet? Sign Up')
-                ]),
-          )),
+        create: (context) => di.sl<AuthBloc>(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Login to EW trainer',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 35,
+                ),
+              ),
+              const SignInForm(),
+              const SizedBox(height: 15),
+              const RedirectButton(
+                Routes.register,
+                'Not registered yet? Sign Up',
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

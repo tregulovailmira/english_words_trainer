@@ -18,19 +18,22 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
       return Right(result.map((word) => word.toDomain()).toList());
     } on DataBaseException catch (e) {
       return Left(
-          DataBaseFailure(message: e.message, statusCode: e.statusCode));
+        DataBaseFailure(message: e.message, statusCode: e.statusCode),
+      );
     }
   }
 
   @override
   Future<Either<Failure, WordEntity>> addNewWord(
-      Map<String, dynamic> word) async {
+    Map<String, dynamic> word,
+  ) async {
     try {
       final result = await dataSource.addNewWord(word);
       return Right(result.toDomain());
     } on DataBaseException catch (e) {
       return Left(
-          DataBaseFailure(message: e.message, statusCode: e.statusCode));
+        DataBaseFailure(message: e.message, statusCode: e.statusCode),
+      );
     }
   }
 }
