@@ -28,7 +28,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthUserState> {
       emit(AuthLoading());
 
       final failureOrUnit = await signInWithEmailAndPassword(
-          AuthParams(email: event.email, password: event.password));
+        AuthParams(email: event.email, password: event.password),
+      );
 
       emit(_getLoadedOrErrorState(failureOrUnit));
     });
@@ -37,7 +38,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthUserState> {
       emit(AuthLoading());
 
       final failureOrUnit = await signUp(
-          AuthParams(email: event.email, password: event.password));
+        AuthParams(email: event.email, password: event.password),
+      );
 
       emit(_getLoadedOrErrorState(failureOrUnit));
     });
@@ -51,8 +53,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthUserState> {
     });
   }
 
-  AuthUserState _getLoadedOrErrorState(failureOrResult) =>
-      failureOrResult.fold(
+  AuthUserState _getLoadedOrErrorState(failureOrResult) => failureOrResult.fold(
         (failure) => AuthError(message: _mapFailureToMessage(failure)),
         (result) {
           if (result is UserEntity) {

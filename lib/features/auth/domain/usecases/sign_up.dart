@@ -12,6 +12,8 @@ class SignUp extends Usecase<Unit, AuthParams> {
   @override
   Future<Either<Failure, Unit>> call(AuthParams params) async {
     return await repository.signUp(
-        email: params.email, password: params.password);
+      email: params.email,
+      password: params.password,
+    );
   }
 }

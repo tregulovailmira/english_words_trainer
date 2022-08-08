@@ -52,10 +52,11 @@ class WordsListView extends StatelessWidget {
       );
     } else {
       return Center(
-          child: Text(
-        'No words added yet :(',
-        style: TextStyle(color: Theme.of(context).colorScheme.primary),
-      ));
+        child: Text(
+          'No words added yet :(',
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+        ),
+      );
     }
   }
 }

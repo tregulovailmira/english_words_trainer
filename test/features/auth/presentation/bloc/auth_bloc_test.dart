@@ -44,10 +44,20 @@ void main() {
       when(mockSignInWithEmailAndPassword(any))
           .thenAnswer((_) async => const Right(unit));
       authBloc.add(
-          SignInWithEmailAndPasswordEvent(email: email, password: password));
+        SignInWithEmailAndPasswordEvent(
+          email: email,
+          password: password,
+        ),
+      );
       await untilCalled(mockSignInWithEmailAndPassword(any));
-      verify(mockSignInWithEmailAndPassword(
-          const AuthParams(email: email, password: password)));
+      verify(
+        mockSignInWithEmailAndPassword(
+          const AuthParams(
+            email: email,
+            password: password,
+          ),
+        ),
+      );
     });
 
     test(
@@ -64,7 +74,11 @@ void main() {
       expectLater(authBloc.stream, emitsInOrder(expectedStates));
 
       authBloc.add(
-          SignInWithEmailAndPasswordEvent(email: email, password: password));
+        SignInWithEmailAndPasswordEvent(
+          email: email,
+          password: password,
+        ),
+      );
     });
 
     test(
@@ -81,7 +95,11 @@ void main() {
       expectLater(authBloc.stream, emitsInOrder(expectedStates));
 
       authBloc.add(
-          SignInWithEmailAndPasswordEvent(email: email, password: password));
+        SignInWithEmailAndPasswordEvent(
+          email: email,
+          password: password,
+        ),
+      );
     });
   });
 

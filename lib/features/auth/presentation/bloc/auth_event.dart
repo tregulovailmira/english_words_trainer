@@ -11,8 +11,10 @@ class SignInWithEmailAndPasswordEvent extends AuthEvent {
   final String email;
   final String password;
 
-  SignInWithEmailAndPasswordEvent({required this.email, required this.password})
-      : super([email, password]);
+  SignInWithEmailAndPasswordEvent({
+    required this.email,
+    required this.password,
+  }) : super([email, password]);
 
   @override
   List<Object> get props => [email, password];

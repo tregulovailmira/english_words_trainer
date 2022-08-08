@@ -18,32 +18,41 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(result);
     } on DataBaseException catch (e) {
       return Left(
-          DataBaseFailure(message: e.message, statusCode: e.statusCode));
+        DataBaseFailure(message: e.message, statusCode: e.statusCode),
+      );
     }
   }
 
   @override
-  Future<Either<Failure, Unit>> signInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<Either<Failure, Unit>> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
       await dbDataSource.sighInWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       return const Right(unit);
     } on DataBaseException catch (e) {
       return Left(
-          DataBaseFailure(message: e.message, statusCode: e.statusCode));
+        DataBaseFailure(message: e.message, statusCode: e.statusCode),
+      );
     }
   }
 
   @override
-  Future<Either<Failure, Unit>> signUp(
-      {required String email, required String password}) async {
+  Future<Either<Failure, Unit>> signUp({
+    required String email,
+    required String password,
+  }) async {
     try {
       await dbDataSource.sighUp(email: email, password: password);
       return const Right(unit);
     } on DataBaseException catch (e) {
       return Left(
-          DataBaseFailure(message: e.message, statusCode: e.statusCode));
+        DataBaseFailure(message: e.message, statusCode: e.statusCode),
+      );
     }
   }
 }

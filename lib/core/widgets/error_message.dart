@@ -8,11 +8,12 @@ class ErrorMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(20),
-        child: Text(
-          message,
-          style: const TextStyle(fontSize: 20, color: Colors.red),
-          textAlign: TextAlign.center,
-        ));
+      padding: const EdgeInsets.all(20),
+      child: Text(
+        message,
+        style: const TextStyle(fontSize: 20, color: Colors.red),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }

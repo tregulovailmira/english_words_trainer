@@ -54,8 +54,12 @@ void main() {
       when(mockSupabaseClient.from(any)).thenReturn(mockSupabaseQueryBuilder);
       when(mockSupabaseQueryBuilder.insert(any))
           .thenReturn(mockPostgrestBuilder);
-      when(mockPostgrestBuilder.execute()).thenAnswer((_) async =>
-          const PostgrestResponse(data: [tCreatedWordResponse], status: 201));
+      when(mockPostgrestBuilder.execute()).thenAnswer(
+        (_) async => const PostgrestResponse(
+          data: [tCreatedWordResponse],
+          status: 201,
+        ),
+      );
     }
 
     void setUpFailureResponse() {
@@ -87,7 +91,8 @@ void main() {
       verifyNoMoreInteractions(mockPostgrestBuilder);
     });
 
-    test('should return WordModel when adding new word was successful', () async {
+    test('should return WordModel when adding new word was successful',
+        () async {
       setUpSuccessfullResponse();
       final result = await vocabularyRemoteDataSourceImpl.addNewWord(tNewWord);
       expect(result, equals(tExpectedResponse));
@@ -99,8 +104,10 @@ void main() {
 
       final call = vocabularyRemoteDataSourceImpl.addNewWord;
 
-      expect(() async => call(tNewWord),
-          throwsA(const TypeMatcher<DataBaseException>()));
+      expect(
+        () async => call(tNewWord),
+        throwsA(const TypeMatcher<DataBaseException>()),
+      );
     });
   });
 
@@ -145,7 +152,11 @@ void main() {
       when(postgrestFilterBuilder.filter('userId', 'eq', tUserId))
           .thenReturn(postgrestFilterBuilder);
       when(postgrestFilterBuilder.execute()).thenAnswer(
-          (_) async => const PostgrestResponse(data: tWordsList, status: 200));
+        (_) async => const PostgrestResponse(
+          data: tWordsList,
+          status: 200,
+        ),
+      );
     }
 
     void setUpFailureResponse() {
@@ -192,8 +203,10 @@ void main() {
 
       final call = vocabularyRemoteDataSourceImpl.getListWords;
 
-      expect(() async => call(tUserId),
-          throwsA(const TypeMatcher<DataBaseException>()));
+      expect(
+        () async => call(tUserId),
+        throwsA(const TypeMatcher<DataBaseException>()),
+      );
     });
   });
 }

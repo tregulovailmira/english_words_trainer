@@ -58,11 +58,13 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton<VocabularyRepository>(
-      () => VocabularyRepositoryImpl(sl()));
+    () => VocabularyRepositoryImpl(sl()),
+  );
 
   // Data Sources
   sl.registerLazySingleton<VocabularyRemoteDataSource>(
-      () => VocabularyRemoteDataSourceImpl(client: sl()));
+    () => VocabularyRemoteDataSourceImpl(client: sl()),
+  );
 
   //! Core
   sl.registerLazySingleton<StringValidator>(() => EmailValidator());

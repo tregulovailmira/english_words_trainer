@@ -22,9 +22,12 @@ void main() {
     const email = 'test@test.com';
     const password = 'secretPassword';
 
-    when(mockAuthRepositry.signUp(
-            email: anyNamed('email'), password: anyNamed('password')))
-        .thenAnswer((_) async => const Right(unit));
+    when(
+      mockAuthRepositry.signUp(
+        email: anyNamed('email'),
+        password: anyNamed('password'),
+      ),
+    ).thenAnswer((_) async => const Right(unit));
 
     final result =
         await usecase(const AuthParams(email: email, password: password));

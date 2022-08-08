@@ -5,8 +5,10 @@ import '../../../../core/errors/exceptions.dart';
 import '../models/user_model.dart';
 
 abstract class DbDataSource {
-  Future<Unit> sighInWithEmailAndPassword(
-      {required String email, required String password});
+  Future<Unit> sighInWithEmailAndPassword({
+    required String email,
+    required String password,
+  });
 
   Future<Unit> sighUp({required String email, required String password});
 
@@ -19,8 +21,10 @@ class DbDataSourceImpl implements DbDataSource {
   DbDataSourceImpl({required this.client});
 
   @override
-  Future<Unit> sighInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<Unit> sighInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     final response = await client.auth.signIn(email: email, password: password);
     if (response.statusCode == 200) {
       return unit;

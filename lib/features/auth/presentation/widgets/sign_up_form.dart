@@ -48,62 +48,73 @@ class SignUpFormState extends AuthState<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthUserState>(
-        listener: (context, state) {
-          if (state is AuthLoaded) {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/account', (route) => false);
-          }
-          if (state is AuthError) {
-            context.showErrorSnackBar(message: state.message);
-          }
-        },
-        builder: (context, state) => Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 30),
-                TextFormField(
-                  validator: (value) => EmailValidator().validate(value!),
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
-                    labelText: 'Email',
+      listener: (context, state) {
+        if (state is AuthLoaded) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/account', (route) => false);
+        }
+        if (state is AuthError) {
+          context.showErrorSnackBar(message: state.message);
+        }
+      },
+      builder: (context, state) => Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 30),
+            TextFormField(
+              validator: (value) => EmailValidator().validate(value!),
+              controller: emailController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.email),
+                labelText: 'Email',
+              ),
+              autocorrect: false,
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              validator: (value) => PasswordValidator().validate(value!),
+              controller: passwordController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.key),
+                labelText: 'Password',
+              ),
+              autocorrect: false,
+              obscureText: true,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              style: ButtonStyle(
+                minimumSize: MaterialStateProperty.all(
+                  const Size(150, 55),
+                ),
+                textStyle: MaterialStateProperty.all(
+                  const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  autocorrect: false,
                 ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  validator: (value) => PasswordValidator().validate(value!),
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.key),
-                      labelText: 'Password'),
-                  autocorrect: false,
-                  obscureText: true,
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 40,
+                  ),
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                        const Size(150, 55),
-                      ),
-                      textStyle: MaterialStateProperty.all(const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold)),
-                      padding: MaterialStateProperty.all(
-                          const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 40))),
-                  onPressed: onSubmitForm,
-                  child: state is AuthLoading
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: ProgressCircle(color: Colors.white),
-                        )
-                      : const Text('Sign up'),
-                ),
-              ],
-            )));
+              ),
+              onPressed: onSubmitForm,
+              child: state is AuthLoading
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: ProgressCircle(color: Colors.white),
+                    )
+                  : const Text('Sign up'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

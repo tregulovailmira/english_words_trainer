@@ -30,22 +30,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'English words trainer',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.green.shade800,
-            secondary: Colors.green.shade600,
-          ),
-          textTheme:
-              const TextTheme(bodyText2: TextStyle(color: Colors.purple)),
+      title: 'English words trainer',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Colors.green.shade800,
+          secondary: Colors.green.shade600,
         ),
-        initialRoute: '/',
-        routes: <String, WidgetBuilder>{
-          Routes.splashPage: (_) => const SplashPage(),
-          Routes.signInPage: (_) => const SignInPage(),
-          Routes.account: (_) => const AccountPage(),
-          Routes.register: (_) => const SignUpPage(),
-          Routes.myVocabulary: (_) => const MyVocabularyPage(),
-        });
+        textTheme: const TextTheme(
+          bodyText2: TextStyle(color: Colors.purple),
+        ),
+      ),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        Routes.splashPage: (_) => const SplashPage(),
+        Routes.signInPage: (_) => const SignInPage(),
+        Routes.account: (_) => const AccountPage(),
+        Routes.register: (_) => const SignUpPage(),
+        Routes.myVocabulary: (_) => const MyVocabularyPage(),
+      },
+    );
   }
 }
