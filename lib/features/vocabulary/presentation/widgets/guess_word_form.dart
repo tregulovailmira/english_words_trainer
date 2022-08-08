@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/validatior.dart';
+import './guess_inputs_list.dart';
 
 class GuessWordForm extends StatefulWidget {
   final String guessWordOrPhrase;
@@ -17,13 +17,12 @@ class GuessWordForm extends StatefulWidget {
 class GuessWordFormState extends State<GuessWordForm> {
   static const emptyChar = '\u200b';
   final _formKey = GlobalKey<FormState>();
-  List<Widget> charInputsList = [];
   List<TextEditingController> controllers = [];
 
   @override
   void initState() {
     super.initState();
-    _setInputsState();
+    _setControllers();
   }
 
   @override
@@ -31,7 +30,7 @@ class GuessWordFormState extends State<GuessWordForm> {
     super.didUpdateWidget(oldWidget);
     FocusScope.of(context).unfocus();
     _formKey.currentState!.reset();
-    _setInputsState();
+    _setControllers();
   }
 
   @override
@@ -42,14 +41,12 @@ class GuessWordFormState extends State<GuessWordForm> {
     super.dispose();
   }
 
-  void _setInputsState() {
-    final newControllers = List.generate(
-      widget.guessWordOrPhrase.length,
-      (index) => TextEditingController(text: emptyChar),
-    );
+  void _setControllers() {
     setState(() {
-      controllers = newControllers;
-      charInputsList = _generateInputsList(newControllers);
+      controllers = List.generate(
+        widget.guessWordOrPhrase.length,
+        (index) => TextEditingController(text: emptyChar),
+      );
     });
   }
 
@@ -66,73 +63,15 @@ class GuessWordFormState extends State<GuessWordForm> {
     _formKey.currentState!.reset();
   }
 
-  _generateInputsList(controllersList) {
-    final List<Widget> widgetsList = [];
-    final charsArray = widget.guessWordOrPhrase.split('');
-    for (var i = 0; i < charsArray.length; i++) {
-      if (charsArray[i] == '-') {
-        widgetsList.add(
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              '-',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black, fontSize: 20),
-            ),
-          ),
-        );
-      } else if (charsArray[i] == ' ') {
-        widgetsList.add(
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-          ),
-        );
-      } else {
-        widgetsList.add(
-          SizedBox(
-            width: 30,
-            height: 30,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 3),
-              child: TextFormField(
-                controller: controllersList[i],
-                validator: (value) => CharValidator()
-                    .validate(value!, widget.guessWordOrPhrase[i]),
-                onChanged: (value) {
-                  if (value.isEmpty) {
-                    controllersList[i].text = emptyChar;
-                    FocusScope.of(context).previousFocus();
-                    return;
-                  } else if (value.length == 2) {
-                    controllersList[i].text = controllersList[i].text[1];
-                    FocusScope.of(context).nextFocus();
-                  }
-                },
-                textAlign: TextAlign.center,
-                maxLength: 2,
-                decoration: const InputDecoration(
-                  errorStyle: TextStyle(height: 0),
-                  counterText: '',
-                ),
-              ),
-            ),
-          ),
-        );
-      }
-    }
-    return widgetsList;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          Wrap(
-            runSpacing: 15,
-            alignment: WrapAlignment.center,
-            children: charInputsList,
+          GuessInputsList(
+            controllers: controllers,
+            guessWordOrPhrase: widget.guessWordOrPhrase,
           ),
           const SizedBox(
             height: 20,
