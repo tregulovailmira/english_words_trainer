@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:english_words_trainer/core/errors/exceptions.dart';
 import 'package:english_words_trainer/features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
 import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart';
@@ -25,6 +26,14 @@ void main() {
 
   const tUserId = '1234';
 
+  const tWordResponse = {
+    'id': 24,
+    'createdAt': '2022-08-01T13:22:02.80902+00:00',
+    'englishWord': 'cat',
+    'translation': 'кот',
+    'userId': tUserId,
+  };
+
   setUp(() {
     mockSupabaseClient = MockSupabaseClient();
     mockSupabaseQueryBuilder = MockSupabaseQueryBuilder();
@@ -40,15 +49,8 @@ void main() {
       'translation': 'кот',
       'userId': tUserId,
     };
-    const tCreatedWordResponse = {
-      'id': 24,
-      'createdAt': '2022-08-01T13:22:02.80902+00:00',
-      'englishWord': 'cat',
-      'translation': 'кот',
-      'userId': tUserId,
-    };
 
-    final tExpectedResponse = WordModel.fromJson(tCreatedWordResponse);
+    final tExpectedResponse = WordModel.fromJson(tWordResponse);
 
     void setUpSuccessfullResponse() {
       when(mockSupabaseClient.from(any)).thenReturn(mockSupabaseQueryBuilder);
@@ -56,7 +58,7 @@ void main() {
           .thenReturn(mockPostgrestBuilder);
       when(mockPostgrestBuilder.execute()).thenAnswer(
         (_) async => const PostgrestResponse(
-          data: [tCreatedWordResponse],
+          data: [tWordResponse],
           status: 201,
         ),
       );
@@ -208,5 +210,165 @@ void main() {
         throwsA(const TypeMatcher<DataBaseException>()),
       );
     });
+  });
+
+  group('updateWord', () {
+    void setUpPosgresBuilder() {
+      when(mockSupabaseClient.from(any)).thenReturn(mockSupabaseQueryBuilder);
+      when(mockSupabaseQueryBuilder.update(any))
+          .thenReturn(postgrestFilterBuilder);
+      when(postgrestFilterBuilder.match(any))
+          .thenReturn(postgrestFilterBuilder);
+    }
+
+    void setUpSuccessfullResponse() {
+      when(postgrestFilterBuilder.execute()).thenAnswer(
+        (_) async => const PostgrestResponse(
+          data: [tWordResponse],
+          status: 200,
+        ),
+      );
+    }
+
+    void setUpFailureResponse() {
+      when(postgrestFilterBuilder.execute()).thenAnswer(
+        (_) async => PostgrestResponse(
+          data: null,
+          status: 400,
+          error: PostgrestError(message: 'DB Error'),
+        ),
+      );
+    }
+
+    test(
+      'should call update method of the Supabase client',
+      () async {
+        setUpPosgresBuilder();
+        setUpSuccessfullResponse();
+
+        vocabularyRemoteDataSourceImpl
+            .updateWord(WordModel.fromJson(tWordResponse));
+
+        // assert
+        verify(mockSupabaseClient.from('vocabulary'));
+        verify(
+          mockSupabaseQueryBuilder.update({
+            'translation': tWordResponse['translation'],
+            'englishWord': tWordResponse['englishWord'],
+          }),
+        );
+        verify(postgrestFilterBuilder.match({'id': tWordResponse['id']}));
+        verify(postgrestFilterBuilder.execute());
+        verifyNoMoreInteractions(mockSupabaseClient);
+        verifyNoMoreInteractions(mockSupabaseQueryBuilder);
+        verifyNoMoreInteractions(postgrestFilterBuilder);
+      },
+    );
+
+    test(
+      'should return word model when word updating was successful',
+      () async {
+        setUpPosgresBuilder();
+        setUpSuccessfullResponse();
+
+        final result = await vocabularyRemoteDataSourceImpl
+            .updateWord(WordModel.fromJson(tWordResponse));
+
+        expect(result, equals(WordModel.fromJson(tWordResponse)));
+      },
+    );
+
+    test(
+      'should throw DataBaseException when status code is not 200',
+      () async {
+        setUpPosgresBuilder();
+        setUpFailureResponse();
+
+        final call = vocabularyRemoteDataSourceImpl.updateWord;
+
+        expect(
+          () async => await call((WordModel.fromJson(tWordResponse))),
+          throwsA(const TypeMatcher<DataBaseException>()),
+        );
+      },
+    );
+  });
+
+  group('deleteWord', () {
+    const tWordId = 5;
+
+    void setUpPosgresBuilder() {
+      when(mockSupabaseClient.from(any)).thenReturn(mockSupabaseQueryBuilder);
+      when(mockSupabaseQueryBuilder.delete())
+          .thenReturn(postgrestFilterBuilder);
+      when(postgrestFilterBuilder.match(any))
+          .thenReturn(postgrestFilterBuilder);
+    }
+
+    void setUpSuccessfullResponse() {
+      when(postgrestFilterBuilder.execute()).thenAnswer(
+        (_) async => const PostgrestResponse(
+          data: [tWordResponse],
+          status: 200,
+        ),
+      );
+    }
+
+    void setUpFailureResponse() {
+      when(postgrestFilterBuilder.execute()).thenAnswer(
+        (_) async => PostgrestResponse(
+          data: null,
+          status: 400,
+          error: PostgrestError(message: 'DB Error'),
+        ),
+      );
+    }
+
+    test(
+      'should call delete method of the Supabase client',
+      () async {
+        setUpPosgresBuilder();
+        setUpSuccessfullResponse();
+
+        vocabularyRemoteDataSourceImpl.deleteWord(tWordId);
+
+        verify(mockSupabaseClient.from('vocabulary'));
+        verify(
+          mockSupabaseQueryBuilder.delete(),
+        );
+        verify(postgrestFilterBuilder.match({'id': tWordId}));
+        verify(postgrestFilterBuilder.execute());
+        verifyNoMoreInteractions(mockSupabaseClient);
+        verifyNoMoreInteractions(mockSupabaseQueryBuilder);
+        verifyNoMoreInteractions(postgrestFilterBuilder);
+      },
+    );
+
+    test(
+      'should return unit model when word deleting was successful',
+      () async {
+        setUpPosgresBuilder();
+        setUpSuccessfullResponse();
+
+        final result = await vocabularyRemoteDataSourceImpl.deleteWord(tWordId);
+
+        expect(result, equals(unit));
+      },
+    );
+
+    test(
+      'should throw DataBaseException when status code is not 200',
+      () async {
+        setUpPosgresBuilder();
+        setUpFailureResponse();
+
+        final call = vocabularyRemoteDataSourceImpl.deleteWord;
+
+        expect(
+          () async => await call(tWordId),
+          throwsA(const TypeMatcher<DataBaseException>()),
+        );
+      },
+    );
   });
 }

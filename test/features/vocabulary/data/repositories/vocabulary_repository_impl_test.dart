@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks/vocabulary_repository_impl_test.mocks.dart';
+import './mocks/vocabulary_repository_impl_test.mocks.dart';
 
 @GenerateMocks([VocabularyRemoteDataSource])
 void main() {
@@ -117,6 +117,65 @@ void main() {
       when(mockVocabularyRemoteDataSource.getListWords(any))
           .thenThrow(DataBaseException('DB error', 400));
       final result = await vocabularyRepositoryImpl.getWordsList(tUserId);
+
+      expect(
+        result,
+        equals(Left(DataBaseFailure(message: 'DB error', statusCode: 400))),
+      );
+    });
+  });
+
+  group('updateWord', () {
+    final tWordEntity = WordEntity(
+      id: 5,
+      englishWord: 'cat',
+      translation: 'кот',
+      userId: '123',
+      createdAt: DateTime.parse('2022-07-29T12:06:28+00:00'),
+    );
+
+    final tWordModel = WordModel.fromDomain(tWordEntity);
+    test('should retrun WordEntity when adding word was successful', () async {
+      when(mockVocabularyRemoteDataSource.updateWord(any))
+          .thenAnswer((_) async => tWordModel);
+
+      final result = await vocabularyRepositoryImpl.updateWord(tWordEntity);
+
+      verify(mockVocabularyRemoteDataSource.updateWord(tWordModel));
+      expect(result, equals(Right(tWordEntity)));
+    });
+
+    test('should return DataBaseFailure if updating  word was unsuccessful',
+        () async {
+      when(mockVocabularyRemoteDataSource.updateWord(any))
+          .thenThrow(DataBaseException('DB error', 400));
+      final result = await vocabularyRepositoryImpl.updateWord(tWordEntity);
+
+      expect(
+        result,
+        equals(Left(DataBaseFailure(message: 'DB error', statusCode: 400))),
+      );
+    });
+  });
+
+  group('deleteWord', () {
+    const tWordId = 10;
+
+    test('should retrun Unit when deleting word was successful', () async {
+      when(mockVocabularyRemoteDataSource.deleteWord(any))
+          .thenAnswer((_) async => unit);
+
+      final result = await vocabularyRepositoryImpl.deleteWord(tWordId);
+
+      verify(mockVocabularyRemoteDataSource.deleteWord(tWordId));
+      expect(result, equals(const Right(unit)));
+    });
+
+    test('should return DataBaseFailure if updating  word was unsuccessful',
+        () async {
+      when(mockVocabularyRemoteDataSource.deleteWord(any))
+          .thenThrow(DataBaseException('DB error', 400));
+      final result = await vocabularyRepositoryImpl.deleteWord(tWordId);
 
       expect(
         result,

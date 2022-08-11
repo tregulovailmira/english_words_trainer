@@ -15,6 +15,8 @@ import './features/vocabulary/presentation/bloc/words_list_bloc.dart';
 import 'features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
 import 'features/vocabulary/data/repositories/vocabulary_repository_impl.dart';
 import 'features/vocabulary/domain/repositories/vocabulary_repository.dart';
+import 'features/vocabulary/domain/usecases/delete_word.dart';
+import 'features/vocabulary/domain/usecases/update_word.dart';
 
 final sl = GetIt.instance;
 
@@ -49,12 +51,19 @@ Future<void> init() async {
 
   // Bloc
   sl.registerFactory(
-    () => WordsListBloc(getWordsList: sl(), addNewWord: sl()),
+    () => WordsListBloc(
+      getWordsList: sl(),
+      addNewWord: sl(),
+      updateWord: sl(),
+      deleteWord: sl(),
+    ),
   );
 
   // Usecases
   sl.registerLazySingleton(() => GetWordsList(sl()));
   sl.registerLazySingleton(() => AddNewWord(sl()));
+  sl.registerLazySingleton(() => UpdateWord(sl()));
+  sl.registerLazySingleton(() => DeleteWord(sl()));
 
   // Repository
   sl.registerLazySingleton<VocabularyRepository>(
