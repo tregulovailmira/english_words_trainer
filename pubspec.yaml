@@ -21,6 +21,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   freezed_annotation: ^2.1.0
   json_annotation: ^4.6.0
+  audioplayers: ^1.0.1
 
 dev_dependencies:
   flutter_test:

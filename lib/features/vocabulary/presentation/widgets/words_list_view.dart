@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './add_new_word_form.dart';
+import './word_audio_player.dart';
 import '../../domain/entities/word_entity.dart';
 import '../bloc/words_list_bloc.dart';
 
@@ -109,10 +110,10 @@ class WordsListView extends StatelessWidget {
                   ],
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.volume_up_sharp),
-              ),
+              const WordAudioPlayer(
+                audioUrl:
+                    'https://api.dictionaryapi.dev/media/pronunciations/en/elevated-us.mp3',
+              )
             ],
           );
         },
