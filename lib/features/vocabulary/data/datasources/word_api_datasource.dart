@@ -20,12 +20,20 @@ class WordApiDataSourceImpl implements WordApiDataSource {
   @override
   Future<WordDescriptionModel> getWordDescription(String word) async {
     final url = '$baseUrl/$word';
-    final response = await client.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      return WordDescriptionModel.fromJson(json.decode(response.body)[0]);
-    } else {
-      final message = json.decode(response.body)['message'] as String;
-      throw ApiException(message, response.statusCode);
+    try {
+      final response = await client.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return WordDescriptionModel.fromJson(
+          (json.decode(response.body) as List).first,
+        );
+      } else {
+        final message = json.decode(response.body)['message'] as String;
+        throw ApiException(message, response.statusCode);
+      }
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

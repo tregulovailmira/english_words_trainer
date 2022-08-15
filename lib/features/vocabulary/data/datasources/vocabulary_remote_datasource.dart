@@ -52,7 +52,7 @@ class VocabularyRemoteDataSourceImpl implements VocabularyRemoteDataSource {
 
     _handleError(response, 200);
 
-    return WordModel.fromJson(response.data[0]);
+    return WordModel.fromJson((response.data as List).first);
   }
 
   @override
