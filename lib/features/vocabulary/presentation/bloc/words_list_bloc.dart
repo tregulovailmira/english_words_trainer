@@ -6,6 +6,7 @@ import '../../../../../core/errors/failures.dart';
 import '../../domain/entities/word_entity.dart';
 import '../../domain/usecases/add_new_word.dart';
 import '../../domain/usecases/delete_word.dart';
+import '../../domain/usecases/get_word_description.dart';
 import '../../domain/usecases/get_words_list.dart';
 import '../../domain/usecases/update_word.dart';
 
@@ -17,12 +18,14 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
   final AddNewWord addNewWord;
   final UpdateWord updateWord;
   final DeleteWord deleteWord;
+  final GetWordDescription getWordDescription;
 
   WordsListBloc({
     required this.getWordsList,
     required this.addNewWord,
     required this.updateWord,
     required this.deleteWord,
+    required this.getWordDescription,
   }) : super(const WordsListState()) {
     on<GetWordsEvent>((event, emit) async {
       emit(const WordsListState(isLoading: true));
@@ -37,8 +40,10 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
       (event, emit) async {
         emit(WordsListState(isLoading: true, words: state.words));
 
+        final wordForCreating = await _prepareWordForCreating(event.word);
+
         final wordOrFailure =
-            await addNewWord(AddNewWordParams(word: event.word));
+            await addNewWord(AddNewWordParams(word: wordForCreating));
 
         emit(_getLoadedOrErrorState(wordOrFailure, state, event));
       },
@@ -127,20 +132,65 @@ class WordsListBloc extends Bloc<WordsListEvent, WordsListState> {
 
   Future<Either<Failure, WordEntity>> _getUpdatedWordOrFailure(
     UpdateWordEvent event,
-  ) {
+  ) async {
     final foundWord = state.words.firstWhere(
       (word) => word.id == event.id,
     );
 
-    final wordToUpdate = WordEntity(
-      id: foundWord.id,
-      userId: foundWord.userId,
-      englishWord: event.updatedEnglishWord,
-      translation: event.updatedTranslation,
-      createdAt: foundWord.createdAt,
+    final descriptionOfFailure = await getWordDescription(
+      GetWordDescriptionParams(word: event.updatedEnglishWord),
     );
+
+    final wordToUpdate = descriptionOfFailure.fold(
+      (failure) {
+        return WordEntity(
+          id: foundWord.id,
+          userId: foundWord.userId,
+          englishWord: event.updatedEnglishWord,
+          translation: event.updatedTranslation,
+          meanings: const [],
+          createdAt: foundWord.createdAt,
+        );
+      },
+      (result) {
+        return WordEntity(
+          id: foundWord.id,
+          userId: foundWord.userId,
+          englishWord: event.updatedEnglishWord,
+          translation: event.updatedTranslation,
+          meanings: result.meanings,
+          listeningUrl: result.listeningUrl,
+          createdAt: foundWord.createdAt,
+        );
+      },
+    );
+
     return updateWord(
       UpdateWordParams(word: wordToUpdate),
     );
+  }
+
+  Future<Map<String, dynamic>> _prepareWordForCreating(
+    Map<String, dynamic> word,
+  ) async {
+    final descriptionOfFailure = await getWordDescription(
+      GetWordDescriptionParams(word: word['englishWord']),
+    );
+
+    Map<String, dynamic> wordForCreating = {};
+
+    descriptionOfFailure.fold(
+      (failure) {
+        wordForCreating = {...word};
+      },
+      (result) => {
+        wordForCreating = {
+          ...word,
+          'listeningUrl': result.listeningUrl,
+          'meanings': result.meanings,
+        }
+      },
+    );
+    return wordForCreating;
   }
 }

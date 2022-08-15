@@ -45,10 +45,10 @@ class VocabularyRemoteDataSourceImpl implements VocabularyRemoteDataSource {
 
   @override
   Future<WordModel> updateWord(WordModel word) async {
-    final response = await client.from(tableName).update({
-      'translation': word.translation,
-      'englishWord': word.englishWord,
-    }).match({'id': word.id}).execute();
+    final response = await client
+        .from(tableName)
+        .update(word.toJson())
+        .match({'id': word.id}).execute();
 
     _handleError(response, 200);
 

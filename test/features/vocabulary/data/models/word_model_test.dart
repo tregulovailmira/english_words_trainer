@@ -9,6 +9,7 @@ void main() {
     userId: '345',
     englishWord: 'cat',
     translation: 'кот',
+    meanings: const [],
     createdAt: DateTime.parse(tDateString),
   );
   final tWordEntity = WordEntity(
@@ -16,6 +17,7 @@ void main() {
     userId: '345',
     englishWord: 'cat',
     translation: 'кот',
+    meanings: const [],
     createdAt: DateTime.parse(tDateString),
   );
 

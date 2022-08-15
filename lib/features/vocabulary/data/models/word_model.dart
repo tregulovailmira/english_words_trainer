@@ -14,7 +14,9 @@ abstract class WordModel implements _$WordModel {
     required String userId,
     required String englishWord,
     required String translation,
+    required List<String> meanings,
     required DateTime createdAt,
+    String? listeningUrl,
   }) = _WordModel;
 
   factory WordModel.fromJson(Map<String, dynamic> json) =>
@@ -26,6 +28,8 @@ abstract class WordModel implements _$WordModel {
       userId: word.userId,
       englishWord: word.englishWord,
       translation: word.translation,
+      listeningUrl: word.listeningUrl,
+      meanings: word.meanings,
       createdAt: word.createdAt,
     );
   }
@@ -36,6 +40,8 @@ abstract class WordModel implements _$WordModel {
       userId: userId,
       englishWord: englishWord,
       translation: translation,
+      listeningUrl: listeningUrl,
+      meanings: meanings,
       createdAt: createdAt,
     );
   }

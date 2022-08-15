@@ -110,10 +110,13 @@ class WordsListView extends StatelessWidget {
                   ],
                 ),
               ),
-              const WordAudioPlayer(
-                audioUrl:
-                    'https://api.dictionaryapi.dev/media/pronunciations/en/elevated-us.mp3',
-              )
+              wordsList[index].listeningUrl != null
+                  ? WordAudioPlayer(
+                      audioUrl: wordsList[index].listeningUrl!,
+                    )
+                  : const SizedBox(
+                      width: 50,
+                    )
             ],
           );
         },

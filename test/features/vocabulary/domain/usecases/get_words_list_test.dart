@@ -28,6 +28,7 @@ void main() {
         englishWord: 'test',
         id: 8,
         translation: 'тест',
+        meanings: const [],
       ),
       WordEntity(
         userId: tUserId,
@@ -35,6 +36,7 @@ void main() {
         englishWord: 'cat',
         id: 9,
         translation: 'кот',
+        meanings: const [],
       )
     ];
     when(mockVocabularyRepository.getWordsList(any))

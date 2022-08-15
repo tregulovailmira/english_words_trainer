@@ -16,3 +16,11 @@ class DataBaseFailure extends Failure {
   final String message;
   final int? statusCode;
 }
+
+class ApiFailure extends Failure {
+  ApiFailure({required this.message, this.statusCode})
+      : super(properties: [message, statusCode]);
+
+  final String message;
+  final int? statusCode;
+}

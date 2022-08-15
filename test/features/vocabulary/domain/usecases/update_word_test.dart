@@ -18,6 +18,7 @@ void main() {
     englishWord: 'cat',
     translation: 'кот',
     userId: '123',
+    meanings: const [],
     createdAt: DateTime.parse('2022-07-29T12:06:28+00:00'),
   );
 

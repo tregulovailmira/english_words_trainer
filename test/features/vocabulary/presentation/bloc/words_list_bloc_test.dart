@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:english_words_trainer/core/errors/failures.dart';
+import 'package:english_words_trainer/features/vocabulary/domain/entities/word_api_description_entity.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/entities/word_entity.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/usecases/add_new_word.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/usecases/delete_word.dart';
+import 'package:english_words_trainer/features/vocabulary/domain/usecases/get_word_description.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/usecases/get_words_list.dart';
 import 'package:english_words_trainer/features/vocabulary/domain/usecases/update_word.dart';
 import 'package:english_words_trainer/features/vocabulary/presentation/bloc/words_list_bloc.dart';
@@ -12,7 +14,13 @@ import 'package:mockito/mockito.dart';
 
 import 'mocks/words_list_bloc_test.mocks.dart';
 
-@GenerateMocks([GetWordsList, AddNewWord, UpdateWord, DeleteWord])
+@GenerateMocks([
+  GetWordsList,
+  AddNewWord,
+  UpdateWord,
+  DeleteWord,
+  GetWordDescription,
+])
 void main() {
   const tUserId = '12345';
   const tWordId = 8;
@@ -20,6 +28,7 @@ void main() {
   late MockAddNewWord mockAddNewWord;
   late MockUpdateWord mockUpdateWord;
   late MockDeleteWord mockDeleteWord;
+  late MockGetWordDescription mockGetWordDescription;
   late WordsListBloc wordsListBloc;
 
   final tWordsList = [
@@ -29,6 +38,7 @@ void main() {
       englishWord: 'test',
       id: 8,
       translation: 'тест',
+      meanings: const [],
     ),
     WordEntity(
       userId: tUserId,
@@ -36,19 +46,27 @@ void main() {
       englishWord: 'cat',
       id: 9,
       translation: 'кот',
+      meanings: const [],
     )
   ];
+
+  const tWordDescription = WordApiDescriptionEntity(
+    word: 'test',
+    meanings: ['test1', 'test2'],
+  );
 
   setUp(() {
     mockGetWordsList = MockGetWordsList();
     mockAddNewWord = MockAddNewWord();
     mockUpdateWord = MockUpdateWord();
     mockDeleteWord = MockDeleteWord();
+    mockGetWordDescription = MockGetWordDescription();
     wordsListBloc = WordsListBloc(
       getWordsList: mockGetWordsList,
       addNewWord: mockAddNewWord,
       updateWord: mockUpdateWord,
       deleteWord: mockDeleteWord,
+      getWordDescription: mockGetWordDescription,
     );
   });
 
@@ -121,7 +139,7 @@ void main() {
   });
 
   group('addNewWord', () {
-    const tNewWord = {
+    final tNewWord = {
       'userId': tUserId,
       'englishWord': 'test',
       'translation': 'тест',
@@ -132,23 +150,46 @@ void main() {
       id: 24,
       createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
       userId: tUserId,
+      meanings: tWordDescription.meanings,
+      listeningUrl: tWordDescription.listeningUrl,
     );
 
     final tUpdatedWordsList = [...tWordsList, tCreatedWord];
     test(
       'should add word via usecase',
       () async {
+        when(mockGetWordDescription(any))
+            .thenAnswer((_) async => const Right(tWordDescription));
         when(mockAddNewWord(any)).thenAnswer((_) async => Right(tCreatedWord));
-        wordsListBloc.add(const AddWordEvent(tNewWord));
+
+        wordsListBloc.add(AddWordEvent(tNewWord));
+
+        await untilCalled(mockGetWordDescription(any));
         await untilCalled(mockAddNewWord(any));
-        verify(mockAddNewWord(const AddNewWordParams(word: tNewWord)));
+
+        verify(
+          mockAddNewWord(
+            AddNewWordParams(
+              word: {
+                ...tNewWord,
+                'listeningUrl': tWordDescription.listeningUrl,
+                'meanings': tWordDescription.meanings,
+              },
+            ),
+          ),
+        );
+        verify(
+          mockGetWordDescription(const GetWordDescriptionParams(word: 'test')),
+        );
       },
     );
 
     test(
-      'should emit state in correct order when updating word was successful',
+      'should emit state in correct order when adding word was successful',
       () {
         when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
+        when(mockGetWordDescription(any))
+            .thenAnswer((_) async => const Right(tWordDescription));
         when(mockAddNewWord(any)).thenAnswer((_) async => Right(tCreatedWord));
         final expectedStates = [
           const WordsListState(isLoading: true, isError: false, words: []),
@@ -164,14 +205,16 @@ void main() {
         expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
 
         wordsListBloc.add(const GetWordsEvent(tUserId));
-        wordsListBloc.add(const AddWordEvent(tNewWord));
+        wordsListBloc.add(AddWordEvent(tNewWord));
       },
     );
 
     test(
-      'should emit state in correct order when updating word was unsuccessful',
+      'should emit state in correct order when adding word was unsuccessful',
       () {
         when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
+        when(mockGetWordDescription(any))
+            .thenAnswer((_) async => const Right(tWordDescription));
         when(mockAddNewWord(any)).thenAnswer(
           (_) async => Left(DataBaseFailure(message: 'DB error')),
         );
@@ -190,14 +233,55 @@ void main() {
         expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
 
         wordsListBloc.add(const GetWordsEvent(tUserId));
-        wordsListBloc.add(const AddWordEvent(tNewWord));
+        wordsListBloc.add(AddWordEvent(tNewWord));
+      },
+    );
+
+    test(
+      'should emit state in correct order when getting word description was unsuccessful',
+      () {
+        final tCreatedWordWithoutDescription = WordEntity(
+          englishWord: 'test',
+          translation: 'тест',
+          id: 24,
+          createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
+          userId: tUserId,
+          meanings: tWordDescription.meanings,
+          listeningUrl: tWordDescription.listeningUrl,
+        );
+
+        when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
+        when(mockGetWordDescription(any)).thenAnswer(
+          (_) async => Left(ApiFailure(message: 'Word not found')),
+        );
+        when(mockAddNewWord(any)).thenAnswer(
+          (_) async => Right(tCreatedWordWithoutDescription),
+        );
+
+        final expectedStates = [
+          const WordsListState(isLoading: true),
+          WordsListState(isLoading: false, words: tWordsList),
+          WordsListState(isLoading: true, words: tWordsList),
+          WordsListState(
+            isLoading: false,
+            words: [
+              ...tWordsList,
+              tCreatedWordWithoutDescription,
+            ],
+          ),
+        ];
+
+        expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
+
+        wordsListBloc.add(const GetWordsEvent(tUserId));
+        wordsListBloc.add(AddWordEvent(tNewWord));
       },
     );
   });
 
   group('updateWord', () {
-    const tUpdatedEnglishWord = 'dog';
-    const tUpdatedTranslation = 'cобака';
+    const tUpdatedEnglishWord = 'test';
+    const tUpdatedTranslation = 'тест';
 
     final tUpdatedWord = WordEntity(
       englishWord: tUpdatedEnglishWord,
@@ -205,6 +289,8 @@ void main() {
       id: 8,
       createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
       userId: tUserId,
+      meanings: tWordDescription.meanings,
+      listeningUrl: tWordDescription.listeningUrl,
     );
 
     final tUpdatedWordsList = [tUpdatedWord, tWordsList[1]];
@@ -212,6 +298,8 @@ void main() {
       'should update word via usecase',
       () async {
         when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
+        when(mockGetWordDescription(any))
+            .thenAnswer((_) async => const Right(tWordDescription));
         when(mockUpdateWord(any)).thenAnswer((_) async => Right(tUpdatedWord));
         wordsListBloc.add(const GetWordsEvent(tUserId));
         wordsListBloc.add(
@@ -224,6 +312,9 @@ void main() {
         await untilCalled(mockUpdateWord(any));
 
         verify(mockUpdateWord(UpdateWordParams(word: tUpdatedWord)));
+        verify(
+          mockGetWordDescription(const GetWordDescriptionParams(word: 'test')),
+        );
       },
     );
 
@@ -231,6 +322,8 @@ void main() {
       'should emit state in correct order when updating word was successful',
       () {
         when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
+        when(mockGetWordDescription(any))
+            .thenAnswer((_) async => const Right(tWordDescription));
         when(mockUpdateWord(any)).thenAnswer((_) async => Right(tUpdatedWord));
 
         final expectedStates = [
@@ -254,10 +347,12 @@ void main() {
     );
 
     test(
-      'should emit state in correct order when deleting word was unsuccessful',
+      'should emit state in correct order when updating word was unsuccessful',
       () {
         when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
-        when(mockDeleteWord(any)).thenAnswer(
+        when(mockGetWordDescription(any))
+            .thenAnswer((_) async => const Right(tWordDescription));
+        when(mockUpdateWord(any)).thenAnswer(
           (_) async => Left(DataBaseFailure(message: 'DB error')),
         );
 
@@ -276,7 +371,56 @@ void main() {
         expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
 
         wordsListBloc.add(const GetWordsEvent(tUserId));
-        wordsListBloc.add(const DeleteWordEvent(tWordId));
+        wordsListBloc.add(
+          const UpdateWordEvent(
+            id: tWordId,
+            updatedEnglishWord: tUpdatedEnglishWord,
+            updatedTranslation: tUpdatedTranslation,
+          ),
+        );
+      },
+    );
+
+    test(
+      'should emit state in correct order when getting word description was unsuccessful',
+      () {
+        final tUpdatedWordWithoutDescription = WordEntity(
+          englishWord: tUpdatedEnglishWord,
+          translation: tUpdatedTranslation,
+          id: 8,
+          createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
+          userId: tUserId,
+          meanings: const [],
+          listeningUrl: null,
+        );
+        when(mockGetWordsList(any)).thenAnswer((_) async => Right(tWordsList));
+        when(mockGetWordDescription(any)).thenAnswer(
+          (_) async => Left(ApiFailure(message: 'Word not found')),
+        );
+        when(mockUpdateWord(any)).thenAnswer(
+          (_) async => Right(tUpdatedWordWithoutDescription),
+        );
+
+        final expectedStates = [
+          const WordsListState(isLoading: true),
+          WordsListState(isLoading: false, words: tWordsList),
+          WordsListState(isLoading: true, words: tWordsList),
+          WordsListState(
+            isLoading: false,
+            words: [tUpdatedWordWithoutDescription, tWordsList[1]],
+          ),
+        ];
+
+        expectLater(wordsListBloc.stream, emitsInOrder(expectedStates));
+
+        wordsListBloc.add(const GetWordsEvent(tUserId));
+        wordsListBloc.add(
+          const UpdateWordEvent(
+            id: tWordId,
+            updatedEnglishWord: tUpdatedEnglishWord,
+            updatedTranslation: tUpdatedTranslation,
+          ),
+        );
       },
     );
   });

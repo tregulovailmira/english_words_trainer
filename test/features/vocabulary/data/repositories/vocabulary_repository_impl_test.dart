@@ -36,6 +36,7 @@ void main() {
       id: 24,
       createdAt: DateTime.parse('2022-08-01T13:22:02.80902+00:00'),
       userId: tUserId,
+      meanings: const [],
     );
     test('should retrun WordEntity when adding new word was successful',
         () async {
@@ -69,6 +70,7 @@ void main() {
         userId: tUserId,
         englishWord: 'cat',
         translation: 'кот',
+        meanings: const [],
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       ),
       WordModel(
@@ -76,6 +78,7 @@ void main() {
         userId: tUserId,
         englishWord: 'dog',
         translation: 'собака',
+        meanings: const [],
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       )
     ];
@@ -86,6 +89,7 @@ void main() {
         userId: tUserId,
         englishWord: 'cat',
         translation: 'кот',
+        meanings: const [],
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       ),
       WordEntity(
@@ -93,6 +97,7 @@ void main() {
         userId: tUserId,
         englishWord: 'dog',
         translation: 'собака',
+        meanings: const [],
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       )
     ];
@@ -131,6 +136,7 @@ void main() {
       englishWord: 'cat',
       translation: 'кот',
       userId: '123',
+      meanings: const [],
       createdAt: DateTime.parse('2022-07-29T12:06:28+00:00'),
     );
 

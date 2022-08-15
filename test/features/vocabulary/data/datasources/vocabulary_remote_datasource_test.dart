@@ -28,9 +28,11 @@ void main() {
 
   const tWordResponse = {
     'id': 24,
-    'createdAt': '2022-08-01T13:22:02.80902+00:00',
+    'createdAt': '2022-08-01T13:22:02.809020Z',
     'englishWord': 'cat',
     'translation': 'кот',
+    'meanings': [],
+    'listeningUrl': null,
     'userId': tUserId,
   };
 
@@ -120,6 +122,7 @@ void main() {
         'englishWord': 'cat',
         'translation': 'кот',
         'userId': tUserId,
+        'meanings': [],
         'createdAt': '2022-07-27T09:58:52+00:00',
       },
       {
@@ -127,6 +130,7 @@ void main() {
         'englishWord': 'dog',
         'translation': 'собака',
         'userId': tUserId,
+        'meanings': [],
         'createdAt': '2022-07-27T09:58:52+00:00',
       }
     ];
@@ -137,6 +141,7 @@ void main() {
         userId: tUserId,
         englishWord: 'cat',
         translation: 'кот',
+        meanings: const [],
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       ),
       WordModel(
@@ -144,6 +149,7 @@ void main() {
         userId: tUserId,
         englishWord: 'dog',
         translation: 'собака',
+        meanings: const [],
         createdAt: DateTime.parse('2022-07-27T09:58:52+00:00'),
       )
     ];
@@ -252,10 +258,7 @@ void main() {
         // assert
         verify(mockSupabaseClient.from('vocabulary'));
         verify(
-          mockSupabaseQueryBuilder.update({
-            'translation': tWordResponse['translation'],
-            'englishWord': tWordResponse['englishWord'],
-          }),
+          mockSupabaseQueryBuilder.update(tWordResponse),
         );
         verify(postgrestFilterBuilder.match({'id': tWordResponse['id']}));
         verify(postgrestFilterBuilder.execute());
