@@ -37,45 +37,45 @@ class FromEnglishModePageState extends AuthRequiredState<FromEnglishModePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<WordsListBloc, WordsListState>(
       builder: (context, state) {
-        return wordIndex >= 0
-            ? GestureDetector(
-                onVerticalDragEnd: (details) {
-                  if (details.primaryVelocity! < 0) {
-                    _getWordIndexForRender();
-                  }
-                },
-                child: Scaffold(
-                  appBar: AppBar(
-                    title: const Text('English mode'),
-                  ),
-                  body: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            state.words[wordIndex].englishWord,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 40,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 60,
-                          ),
-                          GuessWordForm(
-                            onSubmit: _getWordIndexForRender,
-                            guessWordOrPhrase:
-                                state.words[wordIndex].translation,
-                          )
-                        ],
+        if (wordIndex == -1) {
+          return const Center(child: Text('No words added yet'));
+        }
+        return GestureDetector(
+          onVerticalDragEnd: (details) {
+            if (details.primaryVelocity! < 0) {
+              _getWordIndexForRender();
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('English mode'),
+            ),
+            body: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      state.words[wordIndex].englishWord,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 40,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    GuessWordForm(
+                      onSubmit: _getWordIndexForRender,
+                      guessWordOrPhrase: state.words[wordIndex].translation,
+                    )
+                  ],
                 ),
-              )
-            : const Center(child: Text('No words added yet'));
+              ),
+            ),
+          ),
+        );
       },
     );
   }
