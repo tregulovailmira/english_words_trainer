@@ -90,9 +90,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
   void _nextQuestion() {
     if (state.currentQuestionIndex < state.questions.length - 1) {
-      add(const NextQuestionsEvent());
+      add(NextQuestionsEvent());
     } else {
-      add(const EndQuizEvent());
+      add(EndQuizEvent());
     }
   }
 }

@@ -8,7 +8,8 @@ class QuizTimer extends StatefulWidget {
     required this.onTimeEnd,
     this.countdown = 10,
     Key? key,
-  }) : super(key: key);
+  })  : assert(countdown > 1),
+        super(key: key);
 
   final int tick;
   final Function onTimeEnd;

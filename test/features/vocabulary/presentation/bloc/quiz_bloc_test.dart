@@ -65,7 +65,7 @@ void main() {
     ];
 
     quizBloc.add(const StartQuizEvent(questions: tQuestions));
-    quizBloc.add(const NextQuestionsEvent());
+    quizBloc.add(NextQuestionsEvent());
     expect(quizBloc.stream, emitsInOrder(tExpectedStates));
   });
 
