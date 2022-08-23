@@ -22,6 +22,7 @@ import 'features/vocabulary/domain/repositories/word_description_repository.dart
 import 'features/vocabulary/domain/usecases/delete_word.dart';
 import 'features/vocabulary/domain/usecases/get_word_description.dart';
 import 'features/vocabulary/domain/usecases/update_word.dart';
+import 'features/vocabulary/presentation/bloc/quiz/quiz_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -64,6 +65,8 @@ Future<void> init() async {
       getWordDescription: sl(),
     ),
   );
+
+  sl.registerFactory(() => QuizBloc());
 
   // Usecases
   sl.registerLazySingleton(() => GetWordsList(sl()));
