@@ -32,7 +32,12 @@ class VocabularyListState extends AuthRequiredState<VocabularyList> {
     return BlocBuilder<WordsListBloc, WordsListState>(
       builder: (blocContext, state) {
         if (state.isLoading) {
-          return ProgressCircle(color: Theme.of(context).colorScheme.primary);
+          return Center(
+            child: ProgressCircle(
+              color: Theme.of(context).colorScheme.primary,
+              size: 40,
+            ),
+          );
         } else {
           return Padding(
             padding: const EdgeInsets.all(15),

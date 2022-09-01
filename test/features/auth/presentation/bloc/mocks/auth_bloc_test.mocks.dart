@@ -15,6 +15,8 @@ import 'package:english_words_trainer/features/auth/domain/usecases/get_signed_i
     as _i9;
 import 'package:english_words_trainer/features/auth/domain/usecases/sign_in_with_email_and_password.dart'
     as _i4;
+import 'package:english_words_trainer/features/auth/domain/usecases/sign_out.dart'
+    as _i11;
 import 'package:english_words_trainer/features/auth/domain/usecases/sign_up.dart'
     as _i8;
 import 'package:mockito/mockito.dart' as _i1;
@@ -93,4 +95,24 @@ class MockGetSignedInUser extends _i1.Mock implements _i9.GetSignedInUser {
           returnValue: Future<_i3.Either<_i6.Failure, _i10.UserEntity?>>.value(
               _FakeEither_1<_i6.Failure, _i10.UserEntity?>())) as _i5
           .Future<_i3.Either<_i6.Failure, _i10.UserEntity?>>);
+}
+
+/// A class which mocks [SignOut].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSignOut extends _i1.Mock implements _i11.SignOut {
+  MockSignOut() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.AuthRepository get repository =>
+      (super.noSuchMethod(Invocation.getter(#repository),
+          returnValue: _FakeAuthRepository_0()) as _i2.AuthRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>> call(_i7.NoParams? params) =>
+      (super.noSuchMethod(Invocation.method(#call, [params]),
+              returnValue: Future<_i3.Either<_i6.Failure, _i3.Unit>>.value(
+                  _FakeEither_1<_i6.Failure, _i3.Unit>()))
+          as _i5.Future<_i3.Either<_i6.Failure, _i3.Unit>>);
 }

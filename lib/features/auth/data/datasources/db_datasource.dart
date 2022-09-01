@@ -13,6 +13,7 @@ abstract class DbDataSource {
   Future<Unit> sighUp({required String email, required String password});
 
   Future<UserModel?> getSignedInUser();
+  Future<Unit> signOut();
 }
 
 class DbDataSourceImpl implements DbDataSource {
@@ -51,5 +52,14 @@ class DbDataSourceImpl implements DbDataSource {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<Unit> signOut() async {
+    final result = await client.auth.signOut();
+    if (result.error != null) {
+      throw DataBaseException(result.error!.message, result.statusCode);
+    }
+    return unit;
   }
 }

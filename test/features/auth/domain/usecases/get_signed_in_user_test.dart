@@ -11,11 +11,11 @@ import 'mocks/auth_repository.mocks.dart';
 
 @GenerateMocks([AuthRepository])
 void main() {
-  late MockAuthRepositry mockAuthRepository;
+  late MockAuthRepository mockAuthRepository;
   late GetSignedInUser usecase;
 
   setUp(() {
-    mockAuthRepository = MockAuthRepositry();
+    mockAuthRepository = MockAuthRepository();
     usecase = GetSignedInUser(mockAuthRepository);
   });
 

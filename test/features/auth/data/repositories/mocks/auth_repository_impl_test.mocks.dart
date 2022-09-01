@@ -50,4 +50,9 @@ class MockDbDataSource extends _i1.Mock implements _i3.DbDataSource {
       (super.noSuchMethod(Invocation.method(#getSignedInUser, []),
               returnValue: Future<_i5.UserModel?>.value())
           as _i4.Future<_i5.UserModel?>);
+  @override
+  _i4.Future<_i2.Unit> signOut() =>
+      (super.noSuchMethod(Invocation.method(#signOut, []),
+              returnValue: Future<_i2.Unit>.value(_FakeUnit_0()))
+          as _i4.Future<_i2.Unit>);
 }

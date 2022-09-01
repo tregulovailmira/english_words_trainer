@@ -4,6 +4,7 @@ import 'package:english_words_trainer/core/usecases/usecase.dart';
 import 'package:english_words_trainer/features/auth/domain/entities/user_entity.dart';
 import 'package:english_words_trainer/features/auth/domain/usecases/get_signed_in_user.dart';
 import 'package:english_words_trainer/features/auth/domain/usecases/sign_in_with_email_and_password.dart';
+import 'package:english_words_trainer/features/auth/domain/usecases/sign_out.dart';
 import 'package:english_words_trainer/features/auth/domain/usecases/sign_up.dart';
 import 'package:english_words_trainer/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,12 +13,18 @@ import 'package:mockito/mockito.dart';
 
 import 'mocks/auth_bloc_test.mocks.dart';
 
-@GenerateMocks([SignInWithEmailAndPassword, SignUp, GetSignedInUser])
+@GenerateMocks([
+  SignInWithEmailAndPassword,
+  SignUp,
+  GetSignedInUser,
+  SignOut,
+])
 void main() {
   late AuthBloc authBloc;
   late MockSignInWithEmailAndPassword mockSignInWithEmailAndPassword;
   late MockSignUp mockSignUp;
   late MockGetSignedInUser mockGetSignedInUser;
+  late MockSignOut mockSighOut;
 
   const email = 'test@test.com';
   const password = 'testPassword';
@@ -26,11 +33,13 @@ void main() {
     mockSignInWithEmailAndPassword = MockSignInWithEmailAndPassword();
     mockSignUp = MockSignUp();
     mockGetSignedInUser = MockGetSignedInUser();
+    mockSighOut = MockSignOut();
 
     authBloc = AuthBloc(
       signIn: mockSignInWithEmailAndPassword,
       signUp: mockSignUp,
       getUser: mockGetSignedInUser,
+      signOut: mockSighOut,
     );
   });
 
