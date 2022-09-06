@@ -37,3 +37,9 @@ class PasswordValidator implements StringValidator {
     }
   }
 }
+
+class CharValidator {
+  String? validate(String char, String expectedChar) {
+    return char == expectedChar ? null : '';
+  }
+}
