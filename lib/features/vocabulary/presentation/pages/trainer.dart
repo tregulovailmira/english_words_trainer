@@ -20,28 +20,37 @@ class TrainerState extends AuthRequiredState<Trainer> {
         title: 'Trainer',
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Select mode',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Select mode',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 70,
-            ),
-            const NavigateModeButton(
-              buttonText: 'From English to Russian',
-              route: Routes.fromEnglishMode,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+              const SizedBox(
+                height: 70,
+              ),
+              const NavigateModeButton(
+                buttonText: 'From English to Russian',
+                route: Routes.fromEnglishMode,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const NavigateModeButton(
+                buttonText: 'Quiz',
+                route: Routes.quiz,
+              ),
+            ],
+          ),
         ),
       ),
     );
