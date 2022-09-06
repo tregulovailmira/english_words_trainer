@@ -10,8 +10,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import './word_description_repository_impl_test.mocks.dart';
 import '../../../../fixtures/fixture_reader.dart';
-import 'mocks/word_description_repository_impl_test.mocks.dart';
 
 @GenerateMocks([WordApiDataSource])
 void main() {

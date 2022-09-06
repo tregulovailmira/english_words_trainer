@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import './mocks/profile_bloc_test.mocks.dart';
+import './profile_bloc_test.mocks.dart';
 
 @GenerateMocks([
   CreateProfile,

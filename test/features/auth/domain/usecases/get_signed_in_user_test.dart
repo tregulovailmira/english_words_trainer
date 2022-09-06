@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks/auth_repository.mocks.dart';
+import './get_signed_in_user_test.mocks.dart';
 
 @GenerateMocks([AuthRepository])
 void main() {

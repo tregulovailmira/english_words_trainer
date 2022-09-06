@@ -6,7 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'mocks/db_datasource_test.mocks.dart';
+
+import './db_datasource_test.mocks.dart';
 
 @GenerateMocks([SupabaseClient, GoTrueClient])
 void main() {

@@ -6,8 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks/upload_avatar_test.mocks.dart';
-
+import './upload_avatar_test.mocks.dart';
 
 @GenerateMocks([XFile, ProfileRepository])
 void main() {

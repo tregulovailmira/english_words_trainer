@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import './mocks/profile_repository_impl_test.mocks.dart';
+import './profile_repository_impl_test.mocks.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 @GenerateMocks([ProfileDataSource])
