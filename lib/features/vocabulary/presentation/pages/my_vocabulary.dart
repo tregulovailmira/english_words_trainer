@@ -18,6 +18,8 @@ class MyVocabularyPage extends StatefulWidget {
 
 class MyVocabularyPageState extends AuthRequiredState<MyVocabularyPage> {
   String userId = '';
+  final englishWordController = TextEditingController();
+  final translationController = TextEditingController();
 
   @override
   void onAuthenticated(Session session) {
@@ -29,12 +31,23 @@ class MyVocabularyPageState extends AuthRequiredState<MyVocabularyPage> {
   _openForm(blocContext, isLoading, isError) => () {
         showDialog(
           context: blocContext,
-          builder: (_) => AddNewWordForm(
-            userId: userId,
+          builder: (_) => AddOrEditWordForm(
             blocContext: blocContext,
-            isLoading: isLoading,
+            englishWordController: englishWordController,
+            translationController: translationController,
+            onSubmit: onAddWordHandler(blocContext),
+            title: 'Add new word',
           ),
         );
+      };
+
+  onAddWordHandler(BuildContext blocContext) => () {
+        final word = {
+          'englishWord': englishWordController.text,
+          'translation': translationController.text,
+          'userId': userId,
+        };
+        blocContext.read<WordsListBloc>().add(AddWordEvent(word));
       };
 
   @override

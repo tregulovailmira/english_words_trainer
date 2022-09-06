@@ -5,6 +5,7 @@ import '../../../../core/errors/failures.dart';
 import '../../domain/entities/word_entity.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import '../datasources/vocabulary_remote_datasource.dart';
+import '../models/word_model.dart';
 
 class VocabularyRepositoryImpl implements VocabularyRepository {
   final VocabularyRemoteDataSource dataSource;
@@ -33,6 +34,40 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
     } on DataBaseException catch (e) {
       return Left(
         DataBaseFailure(message: e.message, statusCode: e.statusCode),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, WordEntity>> updateWord(
+    WordEntity wordForUpdate,
+  ) async {
+    try {
+      final result = await dataSource.updateWord(
+        WordModel.fromDomain(wordForUpdate),
+      );
+      return Right(result.toDomain());
+    } on DataBaseException catch (e) {
+      return Left(
+        DataBaseFailure(
+          message: e.message,
+          statusCode: e.statusCode,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteWord(int id) async {
+    try {
+      await dataSource.deleteWord(id);
+      return const Right(unit);
+    } on DataBaseException catch (e) {
+      return Left(
+        DataBaseFailure(
+          message: e.message,
+          statusCode: e.statusCode,
+        ),
       );
     }
   }

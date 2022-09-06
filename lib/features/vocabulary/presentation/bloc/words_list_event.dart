@@ -24,3 +24,27 @@ class AddWordEvent extends WordsListEvent {
   @override
   List<Object> get props => [word];
 }
+
+class UpdateWordEvent extends WordsListEvent {
+  final int id;
+  final String updatedEnglishWord;
+  final String updatedTranslation;
+
+  const UpdateWordEvent({
+    required this.id,
+    required this.updatedEnglishWord,
+    required this.updatedTranslation,
+  });
+
+  @override
+  List<Object> get props => [id, updatedEnglishWord, updatedTranslation];
+}
+
+class DeleteWordEvent extends WordsListEvent {
+  final int wordId;
+
+  const DeleteWordEvent(this.wordId);
+
+  @override
+  List<Object> get props => [wordId];
+}

@@ -24,7 +24,9 @@ mixin _$WordModel {
   String get userId => throw _privateConstructorUsedError;
   String get englishWord => throw _privateConstructorUsedError;
   String get translation => throw _privateConstructorUsedError;
+  List<String> get meanings => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  String? get listeningUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +43,9 @@ abstract class $WordModelCopyWith<$Res> {
       String userId,
       String englishWord,
       String translation,
-      DateTime createdAt});
+      List<String> meanings,
+      DateTime createdAt,
+      String? listeningUrl});
 }
 
 /// @nodoc
@@ -58,7 +62,9 @@ class _$WordModelCopyWithImpl<$Res> implements $WordModelCopyWith<$Res> {
     Object? userId = freezed,
     Object? englishWord = freezed,
     Object? translation = freezed,
+    Object? meanings = freezed,
     Object? createdAt = freezed,
+    Object? listeningUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -77,10 +83,18 @@ class _$WordModelCopyWithImpl<$Res> implements $WordModelCopyWith<$Res> {
           ? _value.translation
           : translation // ignore: cast_nullable_to_non_nullable
               as String,
+      meanings: meanings == freezed
+          ? _value.meanings
+          : meanings // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      listeningUrl: listeningUrl == freezed
+          ? _value.listeningUrl
+          : listeningUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -96,7 +110,9 @@ abstract class _$$_WordModelCopyWith<$Res> implements $WordModelCopyWith<$Res> {
       String userId,
       String englishWord,
       String translation,
-      DateTime createdAt});
+      List<String> meanings,
+      DateTime createdAt,
+      String? listeningUrl});
 }
 
 /// @nodoc
@@ -115,7 +131,9 @@ class __$$_WordModelCopyWithImpl<$Res> extends _$WordModelCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? englishWord = freezed,
     Object? translation = freezed,
+    Object? meanings = freezed,
     Object? createdAt = freezed,
+    Object? listeningUrl = freezed,
   }) {
     return _then(_$_WordModel(
       id: id == freezed
@@ -134,10 +152,18 @@ class __$$_WordModelCopyWithImpl<$Res> extends _$WordModelCopyWithImpl<$Res>
           ? _value.translation
           : translation // ignore: cast_nullable_to_non_nullable
               as String,
+      meanings: meanings == freezed
+          ? _value._meanings
+          : meanings // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      listeningUrl: listeningUrl == freezed
+          ? _value.listeningUrl
+          : listeningUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -150,8 +176,11 @@ class _$_WordModel extends _WordModel {
       required this.userId,
       required this.englishWord,
       required this.translation,
-      required this.createdAt})
-      : super._();
+      required final List<String> meanings,
+      required this.createdAt,
+      this.listeningUrl})
+      : _meanings = meanings,
+        super._();
 
   factory _$_WordModel.fromJson(Map<String, dynamic> json) =>
       _$$_WordModelFromJson(json);
@@ -164,12 +193,21 @@ class _$_WordModel extends _WordModel {
   final String englishWord;
   @override
   final String translation;
+  final List<String> _meanings;
+  @override
+  List<String> get meanings {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_meanings);
+  }
+
   @override
   final DateTime createdAt;
+  @override
+  final String? listeningUrl;
 
   @override
   String toString() {
-    return 'WordModel(id: $id, userId: $userId, englishWord: $englishWord, translation: $translation, createdAt: $createdAt)';
+    return 'WordModel(id: $id, userId: $userId, englishWord: $englishWord, translation: $translation, meanings: $meanings, createdAt: $createdAt, listeningUrl: $listeningUrl)';
   }
 
   @override
@@ -183,7 +221,10 @@ class _$_WordModel extends _WordModel {
                 .equals(other.englishWord, englishWord) &&
             const DeepCollectionEquality()
                 .equals(other.translation, translation) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt));
+            const DeepCollectionEquality().equals(other._meanings, _meanings) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality()
+                .equals(other.listeningUrl, listeningUrl));
   }
 
   @JsonKey(ignore: true)
@@ -194,7 +235,9 @@ class _$_WordModel extends _WordModel {
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(englishWord),
       const DeepCollectionEquality().hash(translation),
-      const DeepCollectionEquality().hash(createdAt));
+      const DeepCollectionEquality().hash(_meanings),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(listeningUrl));
 
   @JsonKey(ignore: true)
   @override
@@ -215,7 +258,9 @@ abstract class _WordModel extends WordModel {
       required final String userId,
       required final String englishWord,
       required final String translation,
-      required final DateTime createdAt}) = _$_WordModel;
+      required final List<String> meanings,
+      required final DateTime createdAt,
+      final String? listeningUrl}) = _$_WordModel;
   const _WordModel._() : super._();
 
   factory _WordModel.fromJson(Map<String, dynamic> json) =
@@ -230,7 +275,11 @@ abstract class _WordModel extends WordModel {
   @override
   String get translation;
   @override
+  List<String> get meanings;
+  @override
   DateTime get createdAt;
+  @override
+  String? get listeningUrl;
   @override
   @JsonKey(ignore: true)
   _$$_WordModelCopyWith<_$_WordModel> get copyWith =>
