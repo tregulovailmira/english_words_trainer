@@ -2,7 +2,7 @@ import 'package:clock/clock.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/errors_handlers.dart';
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../../domain/repositiroes/profile_repository.dart';
@@ -19,10 +19,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final result = await dataSource.createProfile(userId);
 
       return Right(result.toDomain());
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -31,10 +29,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final result = await dataSource.getProfile(id);
       return Right(result?.toDomain());
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -47,10 +43,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
           await dataSource.updateProfile(ProfileModel.fromDomain(profile));
 
       return Right(result.toDomain());
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -73,14 +67,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
       await dataSource.updateAvatarUrlAtProfile(userId, avatarUrl);
 
       return Right(avatarUrl);
-    } on StorageException catch (e) {
-      return Left(
-        StorageFailure(message: e.message, statusCode: e.statusCode),
-      );
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 }

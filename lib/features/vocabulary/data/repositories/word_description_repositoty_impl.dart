@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/errors_handlers.dart';
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/word_api_description_entity.dart';
 import '../../domain/repositories/word_description_repository.dart';
@@ -18,8 +18,8 @@ class WordDescriptionRepositoryImpl implements WordDescriptionRepository {
     try {
       final response = await dataSource.getWordDescription(word);
       return Right(response.toDomain());
-    } on ApiException catch (e) {
-      return Left(ApiFailure(message: e.message, statusCode: e.statusCode));
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 }

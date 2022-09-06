@@ -32,3 +32,9 @@ class StorageFailure extends Failure {
   final String message;
   final String? statusCode;
 }
+
+class UnknownFailure extends Failure {
+  UnknownFailure({required this.message}) : super(properties: [message]);
+
+  final String message;
+}

@@ -41,7 +41,9 @@ class ProfileDataSourceImpl implements ProfileDataSource {
     final result =
         await client.from(tableName).insert(profileForCreating).execute();
     _handleError(result, 201);
-    return ProfileModel.fromJson((result.data as List).first);
+
+    final data = result.data as List;
+    return ProfileModel.fromJson(data.first);
   }
 
   @override
@@ -49,8 +51,10 @@ class ProfileDataSourceImpl implements ProfileDataSource {
     final result =
         await client.from(tableName).select().eq('id', userId).execute();
     _handleError(result, 200);
-    if ((result.data as List).isNotEmpty) {
-      return ProfileModel.fromJson((result.data as List).first);
+
+    final data = result.data as List;
+    if (data.isNotEmpty) {
+      return ProfileModel.fromJson(data.first);
     }
     return null;
   }
@@ -62,7 +66,9 @@ class ProfileDataSourceImpl implements ProfileDataSource {
       'updatedAt': clock.now().toUtc().toIso8601String(),
     }).match({'id': profile.id}).execute();
     _handleError(result, 200);
-    return ProfileModel.fromJson((result.data as List).first);
+
+    final data = result.data as List;
+    return ProfileModel.fromJson(data.first);
   }
 
   @override

@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../core/utils/constants.dart';
-import '../../../../core/widgets/progres_circle.dart';
+import './log_out_button.dart';
+import './profile_form.dart';
 import '../../domain/entities/profile_entity.dart';
-import '../bloc/profile_bloc.dart';
-import 'log_out_button.dart';
-import 'profile_form.dart';
 
 class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({required this.userId, required this.onLogOut, Key? key})
-      : super(key: key);
+  const ProfileWidget({
+    required this.userId,
+    required this.onLogOut,
+    required this.onUpdateProfile,
+    required this.onUploadAvatar,
+    required this.profile,
+    required this.isLoading,
+    required this.isLoadingAvatar,
+    Key? key,
+  }) : super(key: key);
 
   final String userId;
   final void Function() onLogOut;
+  final void Function(String) onUpdateProfile;
+  final void Function(XFile) onUploadAvatar;
+  final ProfileEntity profile;
+  final bool isLoading;
+  final bool isLoadingAvatar;
 
   @override
   State<ProfileWidget> createState() => _ProfileWidgetState();
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-  final usernameController = TextEditingController(text: '-');
+  late TextEditingController usernameController;
 
   @override
   void initState() {
     super.initState();
-    context.read<ProfileBloc>().add(GetProfileEvent(widget.userId));
+    usernameController = TextEditingController(text: widget.profile.username);
   }
 
   @override
@@ -35,70 +44,39 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     super.dispose();
   }
 
-  void onUpdateProfile() {
-    final profile = context.read<ProfileBloc>().state.profile!;
-    final preparedProfile = ProfileEntity(
-      id: profile.id,
-      username: usernameController.text,
-      updatedAt: profile.updatedAt,
-      avatarUrl: profile.avatarUrl,
-    );
-    context.read<ProfileBloc>().add(UpdateProfileEvent(preparedProfile));
-    FocusScope.of(context).unfocus();
-  }
-
-  void onUploadAvatar(XFile imageFile) {
-    context
-        .read<ProfileBloc>()
-        .add(UploadAvatarEvent(userId: widget.userId, file: imageFile));
+  onUpdateProfile() {
+    widget.onUpdateProfile(usernameController.text);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfileBloc, ProfileState>(
-      listener: (BuildContext context, state) {
-        if (state.isError) {
-          context.showErrorSnackBar(message: state.errorMessage!);
-        }
-      },
-      builder: (BuildContext context, state) {
-        if (state.profile != null) {
-          return ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: ProfileForm(
-                  usernameController: usernameController,
-                  onUpdateProfile: onUpdateProfile,
-                  onUploadAvatar: onUploadAvatar,
-                ),
-              ),
-              Divider(
-                color: Colors.red.shade300,
-                height: 50,
-                thickness: 1,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LogOutButton(
-                    onPressed: widget.onLogOut,
-                  ),
-                ],
-              )
-            ],
-          );
-        }
-        if (state.isLoading) {
-          return Center(
-            child: ProgressCircle(
-              color: Theme.of(context).colorScheme.primary,
-              size: 40,
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: ProfileForm(
+            profile: widget.profile,
+            isLoading: widget.isLoading,
+            isLoadingAvatar: widget.isLoadingAvatar,
+            usernameController: usernameController,
+            onUpdateProfile: onUpdateProfile,
+            onUploadAvatar: widget.onUploadAvatar,
+          ),
+        ),
+        Divider(
+          color: Colors.red.shade300,
+          height: 50,
+          thickness: 1,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LogOutButton(
+              onPressed: widget.onLogOut,
             ),
-          );
-        }
-        return const SizedBox();
-      },
+          ],
+        )
+      ],
     );
   }
 }
