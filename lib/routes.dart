@@ -6,6 +6,7 @@ class Routes {
   static const String myVocabulary = '/vocabulary';
   static const String trainer = '/trainer';
   static const String fromEnglishMode = '/fromEnglishMode';
+  static const String quiz = '/quiz';
   static const all = <String>{
     splashPage,
     signInPage,
@@ -14,5 +15,6 @@ class Routes {
     myVocabulary,
     trainer,
     fromEnglishMode,
+    quiz,
   };
 }
