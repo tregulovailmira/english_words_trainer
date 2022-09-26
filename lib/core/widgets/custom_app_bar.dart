@@ -34,11 +34,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             const PopupMenuDivider(),
             PopupMenuItem(
               child: ListTile(
-                leading: const Icon(Icons.list),
+                leading: const Icon(Icons.book),
                 title: const Text('My Vocabulary'),
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     Routes.myVocabulary,
+                    (route) => false,
+                  );
+                },
+              ),
+            ),
+            PopupMenuItem(
+              child: ListTile(
+                leading: const Icon(Icons.sports_handball),
+                title: const Text('Trainer'),
+                onTap: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    Routes.trainer,
                     (route) => false,
                   );
                 },
