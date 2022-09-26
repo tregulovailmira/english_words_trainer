@@ -2,10 +2,11 @@
 // in english_words_trainer/test/features/vocabulary/data/repositories/vocabulary_repository_impl_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
+import 'package:dartz/dartz.dart' as _i3;
 import 'package:english_words_trainer/features/vocabulary/data/datasources/vocabulary_remote_datasource.dart'
-    as _i3;
+    as _i4;
 import 'package:english_words_trainer/features/vocabulary/data/models/word_model.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -22,23 +23,35 @@ import 'package:mockito/mockito.dart' as _i1;
 
 class _FakeWordModel_0 extends _i1.Fake implements _i2.WordModel {}
 
+class _FakeUnit_1 extends _i1.Fake implements _i3.Unit {}
+
 /// A class which mocks [VocabularyRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockVocabularyRemoteDataSource extends _i1.Mock
-    implements _i3.VocabularyRemoteDataSource {
+    implements _i4.VocabularyRemoteDataSource {
   MockVocabularyRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.WordModel> addNewWord(Map<String, dynamic>? word) =>
+  _i5.Future<_i2.WordModel> addNewWord(Map<String, dynamic>? word) =>
       (super.noSuchMethod(Invocation.method(#addNewWord, [word]),
               returnValue: Future<_i2.WordModel>.value(_FakeWordModel_0()))
-          as _i4.Future<_i2.WordModel>);
+          as _i5.Future<_i2.WordModel>);
   @override
-  _i4.Future<List<_i2.WordModel>> getListWords(String? userId) =>
-      (super.noSuchMethod(Invocation.method(#getListWords, [userId]),
+  _i5.Future<_i2.WordModel> updateWord(_i2.WordModel? word) =>
+      (super.noSuchMethod(Invocation.method(#updateWord, [word]),
+              returnValue: Future<_i2.WordModel>.value(_FakeWordModel_0()))
+          as _i5.Future<_i2.WordModel>);
+  @override
+  _i5.Future<_i3.Unit> deleteWord(int? id) =>
+      (super.noSuchMethod(Invocation.method(#deleteWord, [id]),
+              returnValue: Future<_i3.Unit>.value(_FakeUnit_1()))
+          as _i5.Future<_i3.Unit>);
+  @override
+  _i5.Future<List<_i2.WordModel>> getListWords(String? id) =>
+      (super.noSuchMethod(Invocation.method(#getListWords, [id]),
               returnValue: Future<List<_i2.WordModel>>.value(<_i2.WordModel>[]))
-          as _i4.Future<List<_i2.WordModel>>);
+          as _i5.Future<List<_i2.WordModel>>);
 }

@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/widgets/progres_circle.dart';
-import '../bloc/words_list_bloc.dart';
+import '../../domain/entities/word_entity.dart';
 
-class AddNewWordForm extends StatelessWidget {
-  final String userId;
+class AddOrEditWordForm extends StatelessWidget {
   final BuildContext blocContext;
-  final bool isLoading;
-  final englishWordController = TextEditingController();
-  final translationController = TextEditingController();
+  final TextEditingController englishWordController;
+  final TextEditingController translationController;
+  final Function onSubmit;
+  final String title;
+  final WordEntity? word;
 
-  AddNewWordForm({
-    required this.userId,
+  const AddOrEditWordForm({
     required this.blocContext,
-    required this.isLoading,
+    required this.englishWordController,
+    required this.translationController,
+    required this.onSubmit,
+    required this.title,
+    this.word,
     Key? key,
   }) : super(key: key);
 
   void onPressedHandler() {
-    final word = {
-      'englishWord': englishWordController.text,
-      'translation': translationController.text,
-      'userId': userId,
-    };
-    blocContext.read<WordsListBloc>().add(AddWordEvent(word));
+    onSubmit();
+    englishWordController.clear();
+    translationController.clear();
     Navigator.of(blocContext).pop();
   }
 
@@ -32,8 +31,8 @@ class AddNewWordForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialog(
       contentPadding: const EdgeInsets.all(15),
-      title: const Text(
-        'Add new word',
+      title: Text(
+        title,
         textAlign: TextAlign.center,
       ),
       children: <Widget>[
@@ -62,9 +61,7 @@ class AddNewWordForm extends StatelessWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: onPressedHandler,
-                child: isLoading
-                    ? const ProgressCircle(color: Colors.white)
-                    : const Text('Add'),
+                child: const Text('OK'),
               ),
             ),
             const SizedBox(
@@ -78,6 +75,8 @@ class AddNewWordForm extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
+                  englishWordController.clear();
+                  translationController.clear();
                 },
                 child: const Text('Cancel'),
               ),
