@@ -58,10 +58,6 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
         ),
       );
     });
-    on<ClearCameraController>((event, emit) {
-      state.cameraController!.dispose();
-      emit(const CameraState());
-    });
   }
 
   Future<CameraState> _startCamera() async {

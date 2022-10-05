@@ -14,5 +14,3 @@ class ChangeCameraDirection extends CameraEvent {}
 class MakePhoto extends CameraEvent {}
 
 class CancelMadePhoto extends CameraEvent {}
-
-class ClearCameraController extends CameraEvent {}
