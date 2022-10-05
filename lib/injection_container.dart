@@ -18,6 +18,7 @@ import './features/profile/domain/usecases/create_profile.dart';
 import './features/profile/domain/usecases/get_profile.dart';
 import './features/profile/domain/usecases/update_profile.dart';
 import './features/profile/domain/usecases/upload_avatar.dart';
+import './features/profile/presentation/bloc/camera/camera_bloc.dart';
 import './features/profile/presentation/bloc/profile_bloc.dart';
 import './features/vocabulary/data/datasources/vocabulary_remote_datasource.dart';
 import './features/vocabulary/data/datasources/word_api_datasource.dart';
@@ -112,6 +113,10 @@ Future<void> init() async {
       updateProfile: sl(),
       uploadAvatar: sl(),
     ),
+  );
+
+  sl.registerFactory(
+    () => CameraBloc(),
   );
 
   // Usecases
