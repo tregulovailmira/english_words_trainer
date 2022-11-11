@@ -56,6 +56,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
             ),
+            PopupMenuItem(
+              child: ListTile(
+                leading: const Icon(Icons.menu_book),
+                title: const Text('Dictionary'),
+                onTap: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    Routes.dictionary,
+                    (route) => false,
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ],

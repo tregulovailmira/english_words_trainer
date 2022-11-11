@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -8,6 +9,7 @@ import './core/pages/splash_page.dart';
 import './features/auth/presentation/bloc/auth_bloc.dart';
 import './features/auth/presentation/pages/sign_in.dart';
 import './features/auth/presentation/pages/sign_up.dart';
+import './features/dictionary/presentation/pages/dictionary_page.dart';
 import './features/profile/presentation/bloc/profile_bloc.dart';
 import './features/profile/presentation/pages/profile.dart';
 import './features/vocabulary/presentation/bloc/quiz/quiz_bloc.dart';
@@ -72,6 +74,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => di.sl<QuizBloc>(),
                 child: const QuizPage(),
               ),
+          Routes.dictionary: (_) => const ProviderScope(child: Dictionary()),
         },
       ),
     );
