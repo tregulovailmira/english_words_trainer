@@ -22,7 +22,6 @@ dependencies:
   freezed_annotation: ^2.1.0
   json_annotation: ^4.6.0
   audioplayers: ^1.0.1
-  http: ^0.13.5
   clock: ^1.1.0
   intl: ^0.17.0
   image_picker: ^0.8.5+3
