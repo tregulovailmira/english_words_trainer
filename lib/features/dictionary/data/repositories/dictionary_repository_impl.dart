@@ -22,4 +22,14 @@ class DictionaryRepositoryImpl implements DictionaryRepository {
       return Left(exceptionHandler(e));
     }
   }
+
+  @override
+  Either<Failure, Unit> cancelRequest() {
+    try {
+      dataSource.cancelRequest();
+      return const Right(unit);
+    } catch (e) {
+      return Left(exceptionHandler(e));
+    }
+  }
 }

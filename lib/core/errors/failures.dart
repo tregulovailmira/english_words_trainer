@@ -38,3 +38,10 @@ class UnknownFailure extends Failure {
 
   final String message;
 }
+
+class CanceledRequestFailure extends Failure {
+  CanceledRequestFailure({this.message})
+      : super(properties: [message]);
+
+  final String? message;
+}

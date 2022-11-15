@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -8,11 +9,13 @@ final baseUrl = dotenv.env['DICTIONARY_BASE_URL'];
 
 abstract class DictionaryDataSource {
   Future<WordDescriptionModel> getWordDescription(String word);
+  Unit cancelRequest();
 }
 
 class DictionaryDataSourceImpl implements DictionaryDataSource {
   final Dio client;
   final List<Interceptor> interceptors;
+  final _cancelToken = CancelToken();
 
   DictionaryDataSourceImpl({required this.client, required this.interceptors}) {
     client.interceptors.addAll(interceptors);
@@ -22,12 +25,16 @@ class DictionaryDataSourceImpl implements DictionaryDataSource {
   Future<WordDescriptionModel> getWordDescription(String word) async {
     final url = '$baseUrl/$word';
     try {
-      final response = await client.get(url);
+      final response = await client.get(url, cancelToken: _cancelToken);
 
       return WordDescriptionModel.fromJson(
         response.data as Map<String, dynamic>,
       );
     } on DioError catch (e) {
+      if (e.type == DioErrorType.cancel) {
+        throw CanceledRequestException();
+      }
+
       String errorMessage;
       final statusCode = e.response?.statusCode;
 
@@ -41,5 +48,11 @@ class DictionaryDataSourceImpl implements DictionaryDataSource {
     } catch (e) {
       throw Exception(e.toString());
     }
+  }
+
+  @override
+  Unit cancelRequest() {
+    _cancelToken.cancel();
+    return unit;
   }
 }

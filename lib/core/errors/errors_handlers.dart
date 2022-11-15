@@ -18,6 +18,8 @@ exceptionHandler(exception) {
         message: (exception as StorageException).message,
         statusCode: exception.statusCode,
       );
+    case CanceledRequestException:
+      return CanceledRequestFailure(message: exception.message);
     default:
       return UnknownFailure(message: exception.toString());
   }

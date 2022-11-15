@@ -18,3 +18,9 @@ class StorageException implements Exception {
   final String message;
   final String? statusCode;
 }
+
+class CanceledRequestException implements Exception {
+  CanceledRequestException([this.message]);
+
+  final String? message;
+}

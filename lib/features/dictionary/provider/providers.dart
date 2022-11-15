@@ -11,6 +11,7 @@ import '../../../core/dio/utils/request_retrier.dart';
 import '../data/datasources/dictionary_datasource.dart';
 import '../data/repositories/dictionary_repository_impl.dart';
 import '../domain/repositories/dictionary_repository.dart';
+import '../domain/usecases/cancel_request.dart';
 import '../domain/usecases/get_word_from_dictionary.dart';
 
 //! External
@@ -55,10 +56,17 @@ final getDescriptionUsecaseProvider = Provider<GetWordFromDictionary>(
   (ref) => GetWordFromDictionary(ref.read(dictionaryRepositoryProvider)),
 );
 
+final cancelRequestProvider = Provider<CancelRequest>(
+  (ref) => CancelRequest(ref.read(dictionaryRepositoryProvider)),
+);
+
 //! State Notifier
 final dictionaryNotifierProvider =
     StateNotifierProvider<DictionaryNotifier, DictionaryState>(
-  (ref) => DictionaryNotifier(ref.read(getDescriptionUsecaseProvider)),
+  (ref) => DictionaryNotifier(
+    getWordFromDictionary: ref.read(getDescriptionUsecaseProvider),
+    cancelRequest: ref.read(cancelRequestProvider),
+  ),
 );
 
 //! Presentation
