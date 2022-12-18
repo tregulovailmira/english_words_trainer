@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import './core/utils/validatior.dart';
@@ -141,5 +141,5 @@ Future<void> init() async {
 
   //! External
   sl.registerLazySingleton(() => Supabase.instance.client);
-  sl.registerLazySingleton(() => http.Client());
+  sl.registerLazySingleton(() => Dio());
 }
