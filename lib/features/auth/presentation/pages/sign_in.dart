@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/widgets/animated_logo.dart';
 import '../../../../injection_container.dart' as di;
 import '../../../../routes.dart';
 import '../bloc/auth_bloc.dart';
@@ -21,6 +22,12 @@ class SignInPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const AnimatedLogo(
+                text: 'Welcome',
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Text(
                 'Login to EW trainer',
                 style: TextStyle(
