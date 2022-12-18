@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks/vocabulary_repository_test.mocks.dart';
+import './update_word_test.mocks.dart';
 
 @GenerateMocks([VocabularyRepository])
 void main() {

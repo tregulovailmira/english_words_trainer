@@ -19,9 +19,8 @@ class WordAudioPlayerState extends State<WordAudioPlayer> {
     setPlayer();
   }
 
-  void setPlayer() async {
+  void setPlayer() {
     player = AudioPlayer();
-    await player.setSourceUrl(widget.audioUrl);
     player.onPlayerComplete.listen((event) {
       setState(() {
         isPlayed = false;
@@ -29,11 +28,19 @@ class WordAudioPlayerState extends State<WordAudioPlayer> {
     });
   }
 
-  _onPress() {
-    isPlayed ? player.stop() : player.resume();
-    setState(() {
-      isPlayed = !isPlayed;
-    });
+  _onPress() async {
+    if (isPlayed) {
+      setState(() {
+        isPlayed = false;
+      });
+      player.stop();
+    } else {
+      setState(() {
+        isPlayed = true;
+      });
+      await player.setSourceUrl(widget.audioUrl);
+      player.resume();
+    }
   }
 
   @override

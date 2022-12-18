@@ -6,15 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks/auth_repository.mocks.dart';
+import './sign_in_with_email_and_password_test.mocks.dart';
 
 @GenerateMocks([AuthRepository])
 void main() {
-  late MockAuthRepositry mockAuthRepositry;
+  late MockAuthRepository mockAuthRepositry;
   late SignInWithEmailAndPassword usecase;
 
   setUp(() {
-    mockAuthRepositry = MockAuthRepositry();
+    mockAuthRepositry = MockAuthRepository();
     usecase = SignInWithEmailAndPassword(mockAuthRepositry);
   });
 

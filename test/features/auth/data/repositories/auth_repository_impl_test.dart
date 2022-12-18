@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks/auth_repository_impl_test.mocks.dart';
+import './auth_repository_impl_test.mocks.dart';
 
 @GenerateMocks([DbDataSource])
 void main() {
@@ -119,6 +119,25 @@ void main() {
           .thenThrow(DataBaseException('DB error'));
       final result = await authRepositoryImpl.getSignedInUser();
       verify(mockDbDataSource.getSignedInUser());
+      expect(result, equals(Left(DataBaseFailure(message: 'DB error'))));
+    });
+  });
+
+  group('signOut', () {
+    test('should return Unit when signing out was successful', () async {
+      when(mockDbDataSource.signOut()).thenAnswer((_) async => unit);
+      final result = await authRepositoryImpl.signOut();
+      verify(mockDbDataSource.signOut());
+      expect(result, equals(const Right(unit)));
+    });
+
+    test(
+        'should return DatabaseFailure when signing out was unsuccessful',
+        () async {
+      when(mockDbDataSource.signOut())
+          .thenThrow(DataBaseException('DB error'));
+      final result = await authRepositoryImpl.signOut();
+      verify(mockDbDataSource.signOut());
       expect(result, equals(Left(DataBaseFailure(message: 'DB error'))));
     });
   });

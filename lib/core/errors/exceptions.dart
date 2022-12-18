@@ -11,3 +11,10 @@ class ApiException implements Exception {
   final String message;
   final int? statusCode;
 }
+
+class StorageException implements Exception {
+  StorageException(this.message, [this.statusCode]);
+
+  final String message;
+  final String? statusCode;
+}

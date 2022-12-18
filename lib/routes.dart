@@ -1,7 +1,7 @@
 class Routes {
   static const String splashPage = '/';
   static const String signInPage = '/login';
-  static const String account = '/account';
+  static const String profile = '/profile';
   static const String register = '/register';
   static const String myVocabulary = '/vocabulary';
   static const String trainer = '/trainer';
@@ -10,7 +10,7 @@ class Routes {
   static const all = <String>{
     splashPage,
     signInPage,
-    account,
+    profile,
     register,
     myVocabulary,
     trainer,
