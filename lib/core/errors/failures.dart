@@ -6,7 +6,7 @@ abstract class Failure extends Equatable {
   final List<dynamic> properties;
 
   @override
-  List<Object?> get props => [properties];
+  List<Object?> get props => properties;
 }
 
 class DataBaseFailure extends Failure {
@@ -23,4 +23,18 @@ class ApiFailure extends Failure {
 
   final String message;
   final int? statusCode;
+}
+
+class StorageFailure extends Failure {
+  StorageFailure({required this.message, this.statusCode})
+      : super(properties: [message, statusCode]);
+
+  final String message;
+  final String? statusCode;
+}
+
+class UnknownFailure extends Failure {
+  UnknownFailure({required this.message}) : super(properties: [message]);
+
+  final String message;
 }

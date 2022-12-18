@@ -6,6 +6,7 @@ import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/usecases/get_signed_in_user.dart';
 import '../../domain/usecases/sign_in_with_email_and_password.dart';
+import '../../domain/usecases/sign_out.dart';
 import '../../domain/usecases/sign_up.dart';
 
 part 'auth_event.dart';
@@ -15,6 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthUserState> {
   final SignInWithEmailAndPassword signInWithEmailAndPassword;
   final SignUp signUp;
   final GetSignedInUser getUser;
+  final SignOut signOut;
 
   AuthUserState get initialState => AuthInitial();
 
@@ -22,6 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthUserState> {
     required SignInWithEmailAndPassword signIn,
     required this.signUp,
     required this.getUser,
+    required this.signOut,
   })  : signInWithEmailAndPassword = signIn,
         super(AuthInitial()) {
     on<SignInWithEmailAndPasswordEvent>((event, emit) async {
@@ -50,6 +53,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthUserState> {
       final failureOrUserEntity = await getUser(NoParams());
 
       emit(_getLoadedOrErrorState(failureOrUserEntity));
+    });
+    on<SignOutEvent>((event, emit) async {
+      emit(AuthLoading());
+
+      await signOut(NoParams());
+      emit(AuthInitial());
     });
   }
 

@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import './mocks/get_word_description_test.mocks.dart';
+import './get_word_description_test.mocks.dart';
 
 @GenerateMocks([WordDescriptionRepository])
 void main() {

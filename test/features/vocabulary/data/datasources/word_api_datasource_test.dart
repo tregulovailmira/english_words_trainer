@@ -9,8 +9,8 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import './word_api_datasource_test.mocks.dart';
 import '../../../../fixtures/fixture_reader.dart';
-import 'mocks/word_api_datasource_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {

@@ -49,10 +49,6 @@ class SignUpFormState extends AuthState<SignUpForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthUserState>(
       listener: (context, state) {
-        if (state is AuthLoaded) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil('/account', (route) => false);
-        }
         if (state is AuthError) {
           context.showErrorSnackBar(message: state.message);
         }
@@ -105,11 +101,7 @@ class SignUpFormState extends AuthState<SignUpForm> {
               ),
               onPressed: onSubmitForm,
               child: state is AuthLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: ProgressCircle(color: Colors.white),
-                    )
+                  ? const ProgressCircle()
                   : const Text('Sign up'),
             ),
           ],

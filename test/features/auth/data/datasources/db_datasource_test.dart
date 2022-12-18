@@ -6,7 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'mocks/db_datasource_test.mocks.dart';
+
+import './db_datasource_test.mocks.dart';
 
 @GenerateMocks([SupabaseClient, GoTrueClient])
 void main() {
@@ -176,6 +177,52 @@ void main() {
       final result = await dbDataSourceImpl.getSignedInUser();
 
       expect(result, null);
+    });
+  });
+
+  group('signOut', () {
+    void setUpSignOutSuccessResponse() {
+      when(mockDbClient.auth).thenReturn(goTrueClient);
+      when(goTrueClient.signOut()).thenAnswer(
+        (_) async => const GotrueResponse(),
+      );
+    }
+
+    void setUpSignOutFailureResponse() {
+      when(mockDbClient.auth).thenReturn(goTrueClient);
+      when(goTrueClient.signOut()).thenAnswer(
+        (_) async => GotrueResponse(
+          error: GotrueError('Invalid user'),
+          statusCode: 401,
+        ),
+      );
+    }
+
+    test('should call user method of the Supabase client', () async {
+      setUpSignOutSuccessResponse();
+      await dbDataSourceImpl.signOut();
+
+      verify(goTrueClient.signOut());
+      verify(mockDbClient.auth);
+      verifyNoMoreInteractions(goTrueClient);
+      verifyNoMoreInteractions(mockDbClient);
+    });
+
+    test('should return Unit if signing out was successful', () async {
+      setUpSignOutSuccessResponse();
+      final result = await dbDataSourceImpl.signOut();
+
+      expect(result, equals(unit));
+    });
+
+    test('should return null if signed in user doesn\'t exists', () async {
+      setUpSignOutFailureResponse();
+      final call = dbDataSourceImpl.signOut;
+
+      expect(
+        () => call(),
+        throwsA(const TypeMatcher<DataBaseException>()),
+      );
     });
   });
 }

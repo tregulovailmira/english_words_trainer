@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/errors_handlers.dart';
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/word_entity.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
@@ -17,10 +17,8 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
     try {
       final result = await dataSource.getListWords(userId);
       return Right(result.map((word) => word.toDomain()).toList());
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -31,10 +29,8 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
     try {
       final result = await dataSource.addNewWord(word);
       return Right(result.toDomain());
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -47,13 +43,8 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
         WordModel.fromDomain(wordForUpdate),
       );
       return Right(result.toDomain());
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(
-          message: e.message,
-          statusCode: e.statusCode,
-        ),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -62,13 +53,8 @@ class VocabularyRepositoryImpl implements VocabularyRepository {
     try {
       await dataSource.deleteWord(id);
       return const Right(unit);
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(
-          message: e.message,
-          statusCode: e.statusCode,
-        ),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 }

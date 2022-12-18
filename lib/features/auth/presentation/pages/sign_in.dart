@@ -28,6 +28,7 @@ class SignInPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 35,
                 ),
+                textAlign: TextAlign.center,
               ),
               const SignInForm(),
               const SizedBox(height: 15),

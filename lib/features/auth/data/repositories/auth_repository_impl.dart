@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/errors_handlers.dart';
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -16,10 +16,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final result = await dbDataSource.getSignedInUser();
       return Right(result);
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -34,10 +32,8 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
       );
       return const Right(unit);
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
 
@@ -49,10 +45,19 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await dbDataSource.sighUp(email: email, password: password);
       return const Right(unit);
-    } on DataBaseException catch (e) {
-      return Left(
-        DataBaseFailure(message: e.message, statusCode: e.statusCode),
-      );
+    } catch (e) {
+      return Left(exceptionHandler(e));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> signOut() async {
+    try {
+      await dbDataSource.signOut();
+      return const Right(unit);
+    } catch (e) {
+      return Left(exceptionHandler(e));
+    }
+  }
+
 }

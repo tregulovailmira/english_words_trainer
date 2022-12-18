@@ -22,10 +22,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             PopupMenuItem(
               child: ListTile(
                 leading: const Icon(Icons.account_circle),
-                title: const Text('Account'),
+                title: const Text('Profile'),
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    Routes.account,
+                    Routes.profile,
                     (route) => false,
                   );
                 },

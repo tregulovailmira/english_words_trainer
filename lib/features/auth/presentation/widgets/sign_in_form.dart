@@ -106,11 +106,7 @@ class SignInFormState extends AuthState<SignInForm> {
               ),
               onPressed: onSubmitForm,
               child: state is AuthLoading
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: ProgressCircle(color: Colors.white),
-                    )
+                  ? const ProgressCircle()
                   : const Text('Sign in'),
             )
           ],
